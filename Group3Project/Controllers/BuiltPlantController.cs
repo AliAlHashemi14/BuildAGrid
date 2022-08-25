@@ -30,7 +30,7 @@ namespace Group3Project.Controllers
         [HttpDelete("DestroyAPlant")] 
         public BuiltPlant DestroyAPlant(int Id)
         {
-            BuiltPlant removedPlant = context.BuiltPlants.FirstOrDefault(x => x.Id == id);
+            BuiltPlant removedPlant = context.BuiltPlants.FirstOrDefault(x => x.Id == Id);
             context.BuiltPlants.Remove(removedPlant);
             context.SaveChanges();
             return removedPlant;
