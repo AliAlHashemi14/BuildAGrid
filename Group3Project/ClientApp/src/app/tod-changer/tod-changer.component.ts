@@ -14,47 +14,49 @@ export class TODChangerComponent implements OnInit {
   times:any[] = [
     {
       id:"Night",
-      utc:"10",
+      utc:"T10",
       day:"same"
 
     },
     {
       id:"Morning",
-      utc:"14",
+      utc:"T14",
       day:"same"
     },
     {
       id:"Midday",
-      utc:"20",
+      utc:"T20",
       day:"same"
     },
     {
       id:"Evening",
-      utc:"01",
+      utc:"T01",
       day:"next"
     }
   ];
   seasons:any[] = [
     {
       id:"Winter",
-      day:"2021-02-28T",
+      month:"2021-02",
+      day:"-28"
       //next:"2021-03-01T"
 
     },
     {
       id:"Spring",
-      day:"2021-04-20T",
+      month:"2021-04",
+      day:"-20",
       //next:"2021-04-21T"
     },
     {
       id:"Summer",
-      day:"2021-08-28T",
-      //next:"2021-08-29T"
+      month:"2021-08",
+      day:"-28"
     },
     {
       id:"Fall",
-      day:"2021-10-28T",
-      //next:"2021-10-29T"
+      month:"2021-10",
+      day:"-28"
     }
   ];
   regions:string[] = ["MISO", "AZPS", "CISO"];
