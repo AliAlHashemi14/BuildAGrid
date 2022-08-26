@@ -1,0 +1,14 @@
+<form #postForm="ngForm" (ngSubmit)="newPlant(postForm)">
+    <input type="number" name="fuelId" placeholder="ID number of Fuel" (input)="changeLimit($event)" ngModel/>
+    <button>Submit</button>
+    <br>
+    <select name="npcValues" > 
+        <Option *ngFor="let num of getWatts()"  value="{{num}}">{{num}}</Option>
+    </select>
+    <!-- <label for="NPC">10 MegaWatts</label>
+    <input type="radio" id="NPC" name="npcValues" value="10" ngModel/>
+    
+    <br>
+    <label for="50">50 MegaWatts</label>
+    <input type="radio" id="50" name="npcValues" value="50" ngModel/> -->
+</form>

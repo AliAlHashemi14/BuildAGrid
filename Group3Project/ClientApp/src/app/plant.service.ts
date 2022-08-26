@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Plant } from './plant';
+import { PlantProperties } from './plant-properties';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class PlantService {
 
   endpoint:string= "api/PlantProp"; 
 
-  AddPlantProps(plant:Plant):any {
+  AddPlantProps(plant:PlantProperties):any {
     return this.http.post(`${this.baseUrl}${this.endpoint}/AddPlantProps`, plant);
 
   }
