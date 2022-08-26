@@ -62,7 +62,7 @@ export class HomeComponent {
 
   }
 
-  getRatio(FuelType:string):any{
+  getRatio(FuelType:string, AltCode:string):any{
      //default time of day is midday, default season is summer, default region is AZPS
      let datetime:string = this.TODStatus.season+this.TODStatus.time
      let monthdate:string = this.TODStatus.time.slice(0,8);
@@ -75,7 +75,7 @@ export class HomeComponent {
      }
    });
  
-     this.eiaService.getActualCapacity(this.TODStatus.region, FuelType, datetime, datetime ).subscribe((response:ActualCapacity) => {this.AC = response;
+     this.eiaService.getActualCapacity(this.TODStatus.region, AltCode, datetime, datetime ).subscribe((response:ActualCapacity) => {this.AC = response;
         for(let i=0; i < this.AC.response.data.length; i++){
          this.Acapacities.push(this.AC.response.data[i].value);
          //console.log(this.AC.response.data[i].value);

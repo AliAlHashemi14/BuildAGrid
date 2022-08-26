@@ -11,5 +11,5 @@
 
 <div *ngFor="let plant of allPlants">
   <p>Nameplate: {{plant.nameplateCapacity}}</p>
-  <p>Actual Output:{{netCapacity[plant.id]}} </p>
+  <p>Actual Output:{{getNetOutput(plant.Id)}} </p>
 </div>

@@ -15,6 +15,8 @@ namespace Group3Project.Models
         public int? MinCapacity { get; set; }
         public int? MaxCapacity { get; set; }
         public bool? RampRate { get; set; }
+        public string? FuelTypeCode { get; set; }
+        public string? AltCode { get; set; }
 
         public virtual ICollection<BuiltPlant> BuiltPlants { get; set; }
     }

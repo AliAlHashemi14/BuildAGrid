@@ -42,7 +42,11 @@ namespace Group3Project.Models
 
             modelBuilder.Entity<PlantProp>(entity =>
             {
+                entity.Property(e => e.AltCode).HasMaxLength(10);
+
                 entity.Property(e => e.FuelType).HasMaxLength(255);
+
+                entity.Property(e => e.FuelTypeCode).HasMaxLength(10);
 
                 entity.Property(e => e.MaxCapacity).HasColumnName("maxCapacity");
 

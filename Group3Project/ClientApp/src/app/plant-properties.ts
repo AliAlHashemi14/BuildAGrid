@@ -4,4 +4,6 @@ export interface PlantProperties {
     minCapacity:number;
     maxCapacity:number;
     rampRate:boolean;
+    FuelTypeCode:string;
+    AltCode:string;
 }
