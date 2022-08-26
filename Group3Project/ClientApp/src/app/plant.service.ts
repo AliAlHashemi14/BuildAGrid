@@ -11,13 +11,17 @@ export class PlantService {
 
   endpoint:string= "api/PlantProp"; 
 
-  AddPlantProps(plant:PlantProperties):any {
-    return this.http.post(`${this.baseUrl}${this.endpoint}/AddPlantProps`, plant);
+  // AddPlantProps(plant:PlantProperties):any {
+  //   return this.http.post(`${this.baseUrl}${this.endpoint}/AddPlantProps`, plant);
 
+  // }
+
+  GetPlantProps(id:number):any {
+    return this.http.get(`${this.baseUrl}${this.endpoint}/GetProps/${id}`);
   }
 
-  GetPlanetProps(id:number):any {
-    return this.http.get(`${this.baseUrl}${this.endpoint}/GetProps/${id}`);
+  GetAllProps():any{
+    return this.http.get(`${this.baseUrl}${this.endpoint}/GetAllProps`);
   }
 
 

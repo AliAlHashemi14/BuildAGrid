@@ -10,20 +10,18 @@ namespace Group3Project.Controllers
     {
         EnergyDBContext context = new EnergyDBContext();
 
-        [HttpGet("GetProps/{id}")] 
+        [HttpGet("GetProps/{id}")]
         public PlantProp GetProps(int id)
         {
             return context.PlantProps.Where(p => p.Id == id).FirstOrDefault();
 
-        } 
+        }
 
-        //obviously this is not done :) 
-        [HttpPost("AddPlantProps")] 
-        public PlantProp AddProps(PlantProp test)
+        [HttpGet("GetAllProps")]
+        public List<PlantProp> GetAllProps()
         {
-            context.PlantProps.Add(test);
-            context.SaveChanges();
-            return test;
-        } 
+            return context.PlantProps.ToList();
+
+        }
     }
 }

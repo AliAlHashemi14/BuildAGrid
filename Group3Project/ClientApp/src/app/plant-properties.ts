@@ -1,7 +1,7 @@
 export interface PlantProperties {
-    Id:number;
+    id:number;
     fuelType:string;
-    rampRate:number;
-    Co2perMW: number;
-    AvgPlantSize:number
+    minCapacity:number;
+    maxCapacity:number;
+    rampRate:boolean;
 }

@@ -1,3 +1,5 @@
+<app-tod-changer (created)="getTOD($event)"
+></app-tod-changer>
 <div *ngFor="let result of demand.response.data">
   <p>DEMAND = {{result.value}} MWh</p>
 </div>
@@ -5,4 +7,9 @@
   <p>Actual Capacity = {{Atotal}}</p>
   <p>Best Possible Capacity = {{Ntotal}}</p>
   <p>Capacity Multiplier = {{Atotal/Ntotal}}</p>
+</div>
+
+<div *ngFor="let plant of allPlants">
+  <p>Nameplate: {{plant.nameplateCapacity}}</p>
+  <p>Actual Output:{{netCapacity[plant.id]}} </p>
 </div>

@@ -20,4 +20,8 @@ export class SandboxService {
     return this.http.delete(`${this.baseUrl}${this.endpoint}/DestroyAPlant?Id=${Id}`, {});
   }
 
+  GetAllPlants():any{
+    return this.http.get(`${this.baseUrl}${this.endpoint}/GetAllPlants`);
+  }
+
 }

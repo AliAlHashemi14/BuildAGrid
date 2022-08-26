@@ -24,7 +24,7 @@ namespace Group3Project.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=energyproject.database.windows.net;Initial Catalog=EnergyDB; User Id=group3; Password=Bootcamp101;");
+                optionsBuilder.UseSqlServer($"Data Source={Secret.address};Initial Catalog=EnergyDB; User Id={Secret.userId}; Password={Secret.password};");
             }
         }
 
@@ -42,9 +42,11 @@ namespace Group3Project.Models
 
             modelBuilder.Entity<PlantProp>(entity =>
             {
-                entity.Property(e => e.Co2perMw).HasColumnName("CO2perMW");
-
                 entity.Property(e => e.FuelType).HasMaxLength(255);
+
+                entity.Property(e => e.MaxCapacity).HasColumnName("maxCapacity");
+
+                entity.Property(e => e.MinCapacity).HasColumnName("minCapacity");
             });
 
             OnModelCreatingPartial(modelBuilder);

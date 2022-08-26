@@ -12,10 +12,9 @@ namespace Group3Project.Models
 
         public int Id { get; set; }
         public string? FuelType { get; set; }
-        public int? RampRate { get; set; }
-        public double? Co2perMw { get; set; }
-        public int? AvgPlantSize { get; set; }
-
+        public int? MinCapacity { get; set; }
+        public int? MaxCapacity { get; set; }
+        public bool? RampRate { get; set; }
 
         public virtual ICollection<BuiltPlant> BuiltPlants { get; set; }
     }

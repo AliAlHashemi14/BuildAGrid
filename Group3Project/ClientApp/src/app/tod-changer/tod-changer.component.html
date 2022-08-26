@@ -1,0 +1,16 @@
+<form #TODForm="ngForm" (ngSubmit)="UpdateTOD(TODForm)">
+    <!-- <input type="number" name="fuelId" placeholder="ID number of Fuel" (input)="changeLimit($event)" ngModel/> -->
+    <select name="TOD" ngModel > 
+        <option *ngFor="let time of times"  [ngValue]="time.utc"  >{{time.id}}</option>
+    </select>
+
+    <select name="Season" ngModel> 
+        <option *ngFor="let s of seasons" [ngValue]="s.day">{{s.id}}</option>
+    </select>
+
+    <select name="Region" ngModel> 
+        <option *ngFor="let r of regions"  [ngValue]="r">{{r}}</option>
+    </select>
+
+    <button>Submit</button>
+</form>

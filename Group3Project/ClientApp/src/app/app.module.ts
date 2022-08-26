@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CreateAPlantComponent } from './create-aplant/create-aplant.component';
+import { TODChangerComponent } from './tod-changer/tod-changer.component';
+import { ListOfPlantsComponent } from './list-of-plants/list-of-plants.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { CreateAPlantComponent } from './create-aplant/create-aplant.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    CreateAPlantComponent
+    CreateAPlantComponent,
+    TODChangerComponent,
+    ListOfPlantsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,6 +33,7 @@ import { CreateAPlantComponent } from './create-aplant/create-aplant.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'add-plant', component: CreateAPlantComponent },
+      { path: 'tod-changer', component: TODChangerComponent },
     ])
   ],
   providers: [],
