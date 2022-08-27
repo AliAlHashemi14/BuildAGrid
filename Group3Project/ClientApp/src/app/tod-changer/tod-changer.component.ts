@@ -59,13 +59,13 @@ export class TODChangerComponent implements OnInit {
       day:"-28"
     }
   ];
-  regions:string[] = ["MISO", "AZPS", "CISO"];
+  regions:string[] = ["MISO", "CISO"];
 
   constructor() { }
 
   ngOnInit(): void {
     this.timeSeasonRegion.time = "20";
-    this.timeSeasonRegion.region = "AZPS";
+    this.timeSeasonRegion.region = "MISO";
     this.timeSeasonRegion.season = "Winter";
   }
 

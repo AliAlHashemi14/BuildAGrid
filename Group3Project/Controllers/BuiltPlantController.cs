@@ -42,6 +42,18 @@ namespace Group3Project.Controllers
             return context.BuiltPlants.ToList();
 
         }
+
+        [HttpPatch("ModifyCapacities/{id}")]
+        public BuiltPlant ModifyCapacities(int Id, int NPC, int AC)
+        {
+            BuiltPlant modifiedPlant = context.BuiltPlants.FirstOrDefault(x => x.Id == Id);
+            modifiedPlant.Npc = NPC;
+            modifiedPlant.Ac = AC;
+            context.BuiltPlants.Update(modifiedPlant);
+            context.SaveChanges();
+            return modifiedPlant;
+
+        }
     }
 }
 

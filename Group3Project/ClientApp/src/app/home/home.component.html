@@ -1,16 +1,24 @@
 <app-tod-changer (created)="getTOD($event)"></app-tod-changer>
+
 <!-- <div *ngFor="let result of demand.response.data">
   <p>DEMAND = {{ result.value }} MWh</p>
-</div>
-<div>
+</div> -->
+<!-- <div>
   <p>Actual Capacity = {{ Atotal }}</p>
   <p>Best Possible Capacity = {{ Ntotal }}</p>
   <p>Capacity Multiplier = {{ Atotal / Ntotal }}</p>
-</div> -->
+</div> --> 
 
-<div *ngFor="let plant of allPlants">
-  <p>Nameplate: {{ plant.nameplateCapacity }}</p>
+<button (click)="getRatio2()">Update ratios</button>
+<button (click)="holyFuck()">Find net capacities </button>
+
+<div *ngFor="let plant of allPlants" >
+  <p >Nameplate: {{ plant.nameplateCapacity }}</p>
+  <p> Plant ID {{plant.id}}</p>
+  <p>Net output:</p>
   <!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+  
+    <div *ngIf="plant.powState==true; else elseBlock"><button (click)="togglePower(plant.id)">Turn off Power Plant</button></div>
+    <ng-template #elseBlock><button (click)="togglePower(plant.id)">Turn On Power Plant</button></ng-template>
+    
 </div>
-<button (click)="getRatio()">getratio</button>
-<button (click)="getNetOutput(1)">get output</button>

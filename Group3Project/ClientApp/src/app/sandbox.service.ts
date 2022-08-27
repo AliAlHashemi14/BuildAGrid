@@ -24,4 +24,7 @@ export class SandboxService {
     return this.http.get(`${this.baseUrl}${this.endpoint}/GetAllPlants`);
   }
 
+  ModifyCapacities(Id:number, NPC:number, AC:number):any{
+    return this.http.patch(`${this.baseUrl}${this.endpoint}/${Id}?Npc=${NPC}&Ac=${AC}`, {});
+  }
 }

@@ -1,4 +1,6 @@
+import { NUMBER_TYPE } from '@angular/compiler/src/output/output_ast';
 import { Component } from '@angular/core';
+import { waitForAsync } from '@angular/core/testing';
 import { ActualCapacity } from '../actual-capacity';
 import { BuiltPlant } from '../built-plant';
 import { Demand } from '../demand';
@@ -14,42 +16,57 @@ import { TOD } from '../tod';
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-
-
-  constructor (private eiaService:EiaServiceService, private sandboxService:SandboxService, private plantService:PlantService) {};
+  constructor(
+    private eiaService: EiaServiceService,
+    private sandboxService: SandboxService,
+    private plantService: PlantService
+  ) {}
 
   //Demand object stores a lot of demand data.
-  demand:Demand = {} as Demand;
-  NPC:Npc = {} as Npc;
-  AC:ActualCapacity = {} as ActualCapacity;
-  //Ncapacities:number[] = [];
-  //Acapacities:number[] = [];
-  Atotal:number = 0;
-  Ntotal:number = 0;
-  allPlants:BuiltPlant[] = [];
-  TODStatus:TOD = {} as TOD;
-  ratio:number = 0;
-  fuelTypeCode:string = "NUC";
-  altCode:string = "NUC";
+  demand: Demand = {} as Demand;
+  NPC: Npc = {} as Npc;
+  AC: ActualCapacity = {} as ActualCapacity;
+  Narray: number[] = [];
+  Aarray: number[] = [];
+  Atotal: number = 0;
+  Ntotal: number = 0;
+  allPlants: BuiltPlant[] = [];
+  TODStatus: TOD = {} as TOD;
+  ratios: number[] = [];
+  PP: PlantProperties[] = [];
+  allActualCapacities: number[] = [];
+  netCapacity: number = {} as number;
+  numberInAC: number = -1;
+  counter: number = -1;
+  offCapacity: number = 0;
+  num: number = 0;
+  BOOOO:number[] = [];
 
-  ngOnInit(){
+  ngOnInit() {
+    this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO' });
+    for (let i = 0; i < this.allPlants.length; i++) {
+      this.checkPower(i);
+    }
+
     //get all built plants
-    this.sandboxService.GetAllPlants().subscribe((response:any) => {this.allPlants = response})
-
-    
+    // this.sandboxService.GetAllPlants().subscribe((response: any) => {
+    //   this.allPlants = response;
+    //   this.TODStatus.region = 'MISO';
+    //   this.TODStatus.season = '2021-02';
+    //   this.TODStatus.time = 'T01';
+    //   this.getDemand();
+    // });
     //default time of day is midday, default season is summer, default region is AZPS
     //this gets demand for this time of day, in this region
-  //   this.eiaService.getDemand("LDWP", "2021-08-28T20", "2021-08-28T20").subscribe((response:Demand) => {this.demand = response; console.log(this.demand)});
-
-  //   //gets solar from LDWP -- tester 
-  //   this.eiaService.getNameplateCapacity("LDWP", "SUN", "2021-08", "2021-08" ).subscribe((response:Npc) =>{this.NPC = response;
-  //   for(let i=0; i < this.NPC.response.data.length; i++){
-  //     this.Ncapacities.push(this.NPC.response.data[i]['nameplate-capacity-mw']);
-  //     this.Ntotal+=this.NPC.response.data[i]['nameplate-capacity-mw'];
-  //   }
-  // });
-
-  //gets actual capacity from same time as tester ^^ 
+    //   this.eiaService.getDemand("LDWP", "2021-08-28T20", "2021-08-28T20").subscribe((response:Demand) => {this.demand = response; console.log(this.demand)});
+    //   //gets solar from LDWP -- tester
+    //   this.eiaService.getNameplateCapacity("LDWP", "SUN", "2021-08", "2021-08" ).subscribe((response:Npc) =>{this.NPC = response;
+    //   for(let i=0; i < this.NPC.response.data.length; i++){
+    //     this.Ncapacities.push(this.NPC.response.data[i]['nameplate-capacity-mw']);
+    //     this.Ntotal+=this.NPC.response.data[i]['nameplate-capacity-mw'];
+    //   }
+    // });
+    //gets actual capacity from same time as tester ^^
     // this.eiaService.getActualCapacity("LDWP", "SUN", "2021-08-28T20", "2021-08-28T20" ).subscribe((response:ActualCapacity) => {this.AC = response;
     //    for(let i=0; i < this.AC.response.data.length; i++){
     //     //this.Acapacities.push(this.AC.response.data[i].value);
@@ -59,112 +76,211 @@ export class HomeComponent {
     // });
   }
 
-  //user sets new TOD 
-  getTOD(newTOD:TOD){
+  //user sets new TOD
+  getTOD(newTOD: TOD) {
     this.TODStatus = newTOD;
-    console.log(this.TODStatus.season)
+    return this.TODStatus;
+    //console.log(this.TODStatus.season)
   }
 
-  getBuiltPlants():any{
-    this.sandboxService.GetAllPlants().subscribe((response:any) => {this.allPlants = response})
-
+  togglePower(id: number): any {
+    id -= 3;
+    this.allPlants[id].powState = !this.allPlants[id].powState;
+    this.checkPower(id);
+    return this.allPlants[id].powState;
   }
 
-//id = fuelId 
-//not currently being used 
-  getCodes(id:number):any{  
-    
-    this.plantService.GetPlantProps(id).subscribe((response:PlantProperties) => {
-     response.FuelTypeCode = this.fuelTypeCode;
-     response.AltCode = this.altCode;
-    })
-  }
-
-  getRatio():any{
-     //default time of day is midday, default season is summer, default region is AZPS 
-     //datetime and monthdate are set by user when TOD is adjuted <3 
-     
-
-     //remove later
-    //  this.plantService.GetPlantProps(1).subscribe((response:PlantProperties) => {
-    //   this.fuelTypeCode=response.FuelTypeCode;
-    //   this.altCode=response.AltCode;
-    // });
-
-
-    let TODDD:string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
-    let monthdate:string = this.TODStatus.season;
-    //let monthdate:string = "2021-08";
-     console.log(TODDD);
-
-     //getting the demand from the TOD changes. 
-     this.eiaService.getDemand(this.TODStatus.region, TODDD, TODDD).subscribe((response:Demand) => {this.demand = response}); 
-
-     // this can be done OnInit for all fuel types and save into an [], rather than call it each time... 
-     // fuelTypeCode passed around a bit - just getting NPC for this fuel type, in this region, so we can use it to compare 
-
-     this.eiaService.getNameplateCapacity(this.TODStatus.region, this.fuelTypeCode, monthdate, monthdate).subscribe((response:Npc) =>{this.NPC = response;
-     for(let i=0; i < this.NPC.response.data.length; i++){
-      //  this.Ncapacities.push(this.NPC.response.data[i]['nameplate-capacity-mw']);
-       this.Ntotal+=this.NPC.response.data[i]['nameplate-capacity-mw'];
-       
-     }
-   });
- 
-     this.eiaService.getActualCapacity(this.TODStatus.region, this.altCode, TODDD, TODDD).subscribe((response:ActualCapacity) => {this.AC = response;
-        for(let i=0; i < this.AC.response.data.length; i++){
-        //  this.Acapacities.push(this.AC.response.data[i].value); 
-         //console.log(this.AC.response.data[i].value);
-         this.Atotal+=this.AC.response.data[i].value; //ATotal
-      }
-      this.ratio = this.Atotal/this.Ntotal;
-     });
-     //console.log(this.AC);
-    
-
-  }
-
-  getNetOutput(id:number):any{
-
-    //get codes :) 
-    //response not saved, just codes we need from the response 
-    this.plantService.GetPlantProps(id).subscribe((response:PlantProperties) => {
-      this.fuelTypeCode=response.FuelTypeCode;
-      this.altCode=response.AltCode;
-    });
-    let getRatiod:number = this.getRatio()
-    let netCapacity:number =-1;
-    for(let i = 0; i<this.allPlants.length-1; i++){
-      if(this.allPlants[i].fuelId == id && this.allPlants[i].powState == true){
-        netCapacity = (this.allPlants[i].nameplateCapacity * getRatiod);
-      }
+  checkPower(id: number): any {
+    id -= 3;
+    if (
+      this.allPlants[id].powState == true &&
+      this.allActualCapacities[id] <= this.allPlants[id].nameplateCapacity
+    ) {
+      return (this.BOOOO[id] = this.allActualCapacities[id]);
+    } else if (
+      this.allPlants[id].powState == true &&
+      this.allActualCapacities[id] > this.allPlants[id].nameplateCapacity
+    ) {
+      return (this.BOOOO[id] = this.allPlants[id].nameplateCapacity);
+    } else {
+      return (this.BOOOO[id] = 0);
     }
-    console.log(netCapacity)
-    return netCapacity;
+  }
+
+  getBuiltPlants(): any {
+    this.sandboxService.GetAllPlants().subscribe((response: any) => {
+      this.allPlants = response;
+    });
+  }
+
+  getDemand(): any {
+    let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
+    this.eiaService
+      .getDemand(this.TODStatus.region, TODDD, TODDD)
+      .subscribe((response: Demand) => {
+        this.demand = response;
+        return this.demand;
+      });
+  }
+
+  holyFuck(): any {
+    console.log(this.Aarray);
+    console.log(this.Narray);
+    for (let i = 0; i < this.Narray.length; i++) {
+      //console.log(this.ratios);
+
+      this.allActualCapacities.push(
+        (this.Aarray[i] / this.Narray[i]) * this.allPlants[i].nameplateCapacity
+      );
+    }
+    console.log(this.allActualCapacities)
+    return this.allActualCapacities;
+  }
+
+  //id = fuelId
+  //not currently being used
+  // getCodes(id: number): any {
+  //   this.plantService
+  //     .GetPlantProps(id)
+  //     .subscribe((response: PlantProperties) => {
+  //       response.FuelTypeCode = this.fuelTypeCode;
+  //       response.AltCode = this.altCode;
+  //     });
+  // }
+
+  // getRatio(): any {
+  //   this.Ntotal = 0;
+  //   this.Atotal = 0;
+  //   this.Narray = [];
+  //   this.Aarray = [];
+
+  //   //let ratioArray:number[] = [];
+
+  //   let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
+  //   let monthdate: string = this.TODStatus.season;
+
+  //   //getting the demand from the TOD changes.
+
+  //   //getting the actual capacity for each fuel type
+  //   console.log(this.PP[this.counter].altCode);
+  //   this.eiaService
+  //     .getActualCapacity(
+  //       this.TODStatus.region,
+  //       this.PP[this.counter].altCode,
+  //       TODDD,
+  //       TODDD
+  //     )
+  //     .subscribe((A: any) => {
+  //       this.AC = A;
+  //       this.Atotal = 0;
+  //       for (let j = 0; j < this.AC.response.data.length; j++) {
+  //         this.Atotal += this.AC.response.data[j].value;
+  //       }
+  //       this.Aarray.push(this.Atotal);
+  //       console.log(this.Aarray);
+  //     });
+
+  //   this.eiaService
+  //     .getNameplateCapacity(
+  //       this.TODStatus.region,
+  //       this.PP[this.counter].fuelTypeCode,
+  //       monthdate,
+  //       monthdate
+  //     )
+  //     .subscribe((response: Npc) => {
+  //       this.NPC = response;
+  //       this.Ntotal = 0;
+
+  //       for (let k = 0; k < this.NPC.response.data.length; k++) {
+  //         this.Ntotal += this.NPC.response.data[k]['nameplate-capacity-mw'];
+  //       }
+  //       this.Narray.push(this.Ntotal);
+  //       console.log(this.Narray);
+  //       // this.ratio = this.Atotal / this.Ntotal;
+  //       // ratioArray.push(this.ratio);
+  //       // //console.log(this.allPlants[num].powState);
+  //       // this.netCapacity = this.allPlants[i].nameplateCapacity * this.ratio;
+  //       // this.allActualCapacities.push(this.netCapacity);
+
+  //       // // if (this.allPlants[num].powState == true) {
+  //       // //   this.netCapacity.push(this.allPlants[num].nameplateCapacity * this.ratio);
+  //       // // } else {
+  //       // //   this.netCapacity.push(0);
+  //       // // }
+  //       // console.log(this.netCapacity);
+  //     });
+  //   return (this.counter += 1);
+  // }
+  // // return this.allActualCapacities;
+
+  getRatio2(): any {
+    this.Ntotal = 0;
+    this.Atotal = 0;
+    this.Narray = [];
+    this.Aarray = [];
+    this.allActualCapacities = [];
+    this.PP = [];
+
+    this.counter += 1;
+    console.log(this.counter);
+
+    this.sandboxService.GetAllPlants().subscribe((response: any) => {
+      this.allPlants = response;
+
+      for (let i = 0; i < this.allPlants.length; i++) {
+        console.log(this.allPlants[i].fuelId);
+
+        this.plantService
+          .GetPlantProps(this.allPlants[i].fuelId)
+          .subscribe((B: PlantProperties) => {
+            this.PP.push(B);
+            //console.log(this.PP);
+
+            let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
+            let monthdate: string = this.TODStatus.season;
+
+            console.log(this.PP[i].altCode)
+            this.eiaService
+              .getActualCapacity(
+                this.TODStatus.region,
+                this.PP[i].altCode,
+                TODDD,
+                TODDD
+              )
+              .subscribe((A: any) => {
+                this.AC = A;
+                this.Atotal = 0;
+                for (let j = 0; j < this.AC.response.data.length; j++) {
+                  this.Atotal += this.AC.response.data[j].value;
+                }
+                this.Aarray.push(this.Atotal);
+                console.log(this.Atotal);
+
+                console.log(this.PP[i].fuelTypeCode);
+                this.eiaService
+                  .getNameplateCapacity(
+                    this.TODStatus.region,
+                    this.PP[i].fuelTypeCode,
+                    monthdate,
+                    monthdate
+                  )
+                  .subscribe((C: Npc) => {
+                    this.NPC = C;
+                    this.Ntotal = 0;
+
+                    for (let k = 0; k < this.NPC.response.data.length; k++) {
+                      //console.log(this.NPC.response.data[k]['nameplate-capacity-mw'])
+                      this.Ntotal +=
+                        this.NPC.response.data[k]['nameplate-capacity-mw'];
+                    }
+                    console.log(this.Ntotal);
+                    //console.log(this.allActualCapacities[i]);
+                  });
+              });
+          });
+      }
+    });
+    // console.log(this.allActualCapacities)
+    // return this.allActualCapacities;
   }
 }
-
-
-// getRatio(FuelType:string, AltCode:string):any{
-//   //default time of day is midday, default season is summer, default region is AZPS
-//   let datetime:string = this.TODStatus.season+this.TODStatus.time
-//   let monthdate:string = this.TODStatus.time.slice(0,8);
-//   //console.log(monthdate);
-//   this.eiaService.getDemand(this.TODStatus.region, datetime, datetime).subscribe((response:Demand) => {this.demand = response; console.log(this.demand)});
-//   this.eiaService.getNameplateCapacity(this.TODStatus.region, FuelType, monthdate, monthdate ).subscribe((response:Npc) =>{this.NPC = response;
-//   for(let i=0; i < this.NPC.response.data.length; i++){
-//     this.Ncapacities.push(this.NPC.response.data[i]['nameplate-capacity-mw']);
-//     this.Ntotal+=this.NPC.response.data[i]['nameplate-capacity-mw'];
-//   }
-// });
-
-//   this.eiaService.getActualCapacity(this.TODStatus.region, AltCode, datetime, datetime ).subscribe((response:ActualCapacity) => {this.AC = response;
-//      for(let i=0; i < this.AC.response.data.length; i++){
-//       this.Acapacities.push(this.AC.response.data[i].value);
-//       //console.log(this.AC.response.data[i].value);
-//       this.Atotal+=this.AC.response.data[i].value;
-//    }
-//   });
-//   this.ratio = this.Atotal/this.Ntotal;
-//   return this.ratio;
-// }

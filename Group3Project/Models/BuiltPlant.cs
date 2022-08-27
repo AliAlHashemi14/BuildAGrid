@@ -9,6 +9,8 @@ namespace Group3Project.Models
         public int? FuelId { get; set; }
         public int? NameplateCapacity { get; set; }
         public bool? PowState { get; set; }
+        public int? Npc { get; set; }
+        public int? Ac { get; set; }
 
         public virtual PlantProp? Fuel { get; set; }
     }

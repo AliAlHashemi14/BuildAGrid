@@ -1,6 +1,8 @@
 export interface BuiltPlant { 
-    Id:number;
+    id:number;
     fuelId: number;
     nameplateCapacity:number;
     powState:boolean;
+    NPC:number;
+    AC:number;
 }

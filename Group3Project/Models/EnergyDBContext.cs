@@ -32,7 +32,11 @@ namespace Group3Project.Models
         {
             modelBuilder.Entity<BuiltPlant>(entity =>
             {
+                entity.Property(e => e.Ac).HasColumnName("AC");
+
                 entity.Property(e => e.NameplateCapacity).HasColumnName("nameplateCapacity");
+
+                entity.Property(e => e.Npc).HasColumnName("NPC");
 
                 entity.HasOne(d => d.Fuel)
                     .WithMany(p => p.BuiltPlants)

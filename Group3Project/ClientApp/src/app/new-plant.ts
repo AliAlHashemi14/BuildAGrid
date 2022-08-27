@@ -1,6 +1,8 @@
 export interface NewPlant {
-    Id:number;
+    id:number;
     fuelId:number;
     namplateCapacity:number;
     powState:boolean;
+    NPC:number;
+    AC:number;
 }
