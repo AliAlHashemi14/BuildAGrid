@@ -10,8 +10,8 @@ import { PlantProperties } from '../plant-properties';
 import { PlantService } from '../plant.service';
 import { SandboxService } from '../sandbox.service';
 import { TOD } from '../tod';
-import { concatMap, tap } from 'rxjs/operators'
-import { concat, mergeMap } from 'rxjs';
+import { concatMap, tap, mergeMap, map } from 'rxjs/operators'
+import { Observable, from, pipe } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -221,6 +221,10 @@ export class HomeComponent {
     })
   }
 
+  getTodddString(): string {
+    return `${this.TODStatus.season}-28${this.TODStatus.time}`;
+  }
+
   getRatio2(): any {
     this.Ntotal = 0;
     this.Atotal = 0;
@@ -234,7 +238,26 @@ export class HomeComponent {
     this.counter += 1;
     console.log(this.counter);
 
-    this.sandboxService.GetAllPlants().pipe(this.debug(), mergeMap((allPlants: BuiltPlant[]) => {
+    // Get all plants, using tap store that value locally to the component.
+    this.sandboxService.GetAllPlants().pipe(tap((allPlants: BuiltPlant[]) => {
+      this.allPlants = allPlants;
+    }),
+    // from takes items individually 'from' the array returned above.
+    from,
+    // pipe on the array to mergeMap into the next API call.
+    mergeMap((plant: BuiltPlant) => {
+      return this.plantService.GetPlantProps(plant.id)
+    }), // mergeMap again for the next call...
+     mergeMap((props: PlantProperties) => {
+      this.PP.push(props);
+      const TODDD = this.getTodddString();
+      
+      return this.eiaService.getActualCapacity(this.TODStatus.region, props.altCode, TODDD, TODDD)
+    })).subscribe((res: any) => {
+      console.log(res)
+    });
+
+    this.sandboxService.GetAllPlants().pipe(this.debug(), tap((allPlants: BuiltPlant[]) => {
       this.allPlants = allPlants;
     }))
 
@@ -253,7 +276,7 @@ export class HomeComponent {
               TODDD,
               TODDD
               )
-          }),this.debug(), concatMap((actualCapacity: any) => {
+          })),this.debug(), concatMap((actualCapacity: any) => {
             this.AC = actualCapacity;
             this.Atotal = 0;
             let monthdate: string = this.TODStatus.season;
@@ -292,5 +315,7 @@ export class HomeComponent {
                       this.BOOOO[i] = placehold.nameplateCapacity*(placehold.ac/placehold.npc);
                       console.log(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
                     })
-                  })}
-                }
+                  })
+        }
+  }
+}
