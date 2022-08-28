@@ -10,6 +10,8 @@ import { PlantProperties } from '../plant-properties';
 import { PlantService } from '../plant.service';
 import { SandboxService } from '../sandbox.service';
 import { TOD } from '../tod';
+import { concatMap, tap } from 'rxjs/operators'
+import { concat, mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -213,6 +215,12 @@ export class HomeComponent {
   // }
   // // return this.allActualCapacities;
 
+  debug() {
+    return tap(data => {
+      console.log(data);
+    })
+  }
+
   getRatio2(): any {
     this.Ntotal = 0;
     this.Atotal = 0;
@@ -221,53 +229,52 @@ export class HomeComponent {
     this.allActualCapacities = [];
     this.PP = [];
     this.BOOOO = [];
+    this.allPlants = [];
 
     this.counter += 1;
     console.log(this.counter);
 
-    this.sandboxService.GetAllPlants().subscribe((response: any) => {
-      this.allPlants = response;
+    this.sandboxService.GetAllPlants().pipe(this.debug(), mergeMap((allPlants: BuiltPlant[]) => {
+      this.allPlants = allPlants;
+    }))
 
       for (let i = 0; i < this.allPlants.length; i++) {
         console.log(this.allPlants[i].fuelId);
 
         this.plantService
           .GetPlantProps(this.allPlants[i].fuelId)
-          .subscribe((B: PlantProperties) => {
-            this.PP.push(B);
-            //console.log(this.PP);
-
+          .pipe(this.debug(),concatMap((plantProps: PlantProperties) => {
+            this.PP.push(plantProps);
             let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
             let monthdate: string = this.TODStatus.season;
 
-            console.log(this.PP[i].altCode)
-            this.eiaService
-              .getActualCapacity(
-                this.TODStatus.region,
-                this.PP[i].altCode,
-                TODDD,
-                TODDD
+            return this.eiaService.getActualCapacity(this.TODStatus.region,
+              this.PP[i].altCode,
+              TODDD,
+              TODDD
               )
-              .subscribe((A: any) => {
-                this.AC = A;
-                this.Atotal = 0;
-                for (let j = 0; j < this.AC.response.data.length; j++) {
-                  this.Atotal += this.AC.response.data[j].value;
-                }
-                this.Atotal = Math.round(this.Atotal);
-                this.Aarray.push(Math.round(this.Atotal));
-                console.log(Math.round(this.Atotal));
+          }),this.debug(), concatMap((actualCapacity: any) => {
+            this.AC = actualCapacity;
+            this.Atotal = 0;
+            let monthdate: string = this.TODStatus.season;
 
-                console.log(this.PP[i].fuelTypeCode);
-                this.eiaService
-                  .getNameplateCapacity(
-                    this.TODStatus.region,
-                    this.PP[i].fuelTypeCode,
-                    monthdate,
-                    monthdate
-                  )
-                  .subscribe((C: Npc) => {
-                    this.NPC = C;
+            for (let j = 0; j < this.AC.response.data.length; j++) {
+              this.Atotal += this.AC.response.data[j].value;
+            }
+            this.Atotal = Math.round(this.Atotal);
+            this.Aarray.push(Math.round(this.Atotal));
+            console.log(Math.round(this.Atotal));
+
+            console.log(this.PP[i].fuelTypeCode);
+            return this.eiaService
+              .getNameplateCapacity(
+                this.TODStatus.region,
+                this.PP[i].fuelTypeCode,
+                monthdate,
+                monthdate
+              )}
+          ), this.debug(), concatMap((C: any) => {this.NPC = C;
+                    
                     this.Ntotal = 0;
 
                     for (let k = 0; k < this.NPC.response.data.length; k++) {
@@ -279,15 +286,11 @@ export class HomeComponent {
                     this.Narray.push(Math.round(this.Ntotal));
                     console.log(Math.round(this.Ntotal));
 
-                    this.sandboxService.ModifyCapacities(this.allPlants[i].id, this.Ntotal, this.Atotal).subscribe((result:BuiltPlant) => {
+                    return this.sandboxService.ModifyCapacities(this.allPlants[i].id, this.Ntotal, this.Atotal).subscribe((result:BuiltPlant) => {
                       let placehold:BuiltPlant = result;
                       console.log(placehold);
                       this.BOOOO[i] = placehold.nameplateCapacity*(placehold.ac/placehold.npc);
                       console.log(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
                     })
-                  });
-              });
-          });
-      }
-      return this.BOOOO;
-    })}}
+                  })}
+                }
