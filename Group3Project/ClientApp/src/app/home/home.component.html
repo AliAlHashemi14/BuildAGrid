@@ -10,12 +10,11 @@
 </div> --> 
 
 <button (click)="getRatio2()">Update ratios</button>
-<button (click)="holyFuck()">Find net capacities </button>
 
 <div *ngFor="let plant of allPlants" >
   <p >Nameplate: {{ plant.nameplateCapacity }}</p>
   <p> Plant ID {{plant.id}}</p>
-  <p>Net output:</p>
+  <p>Net output: {{BOOOO[plant.id -3]}}</p>
   <!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
   
     <div *ngIf="plant.powState==true; else elseBlock"><button (click)="togglePower(plant.id)">Turn off Power Plant</button></div>

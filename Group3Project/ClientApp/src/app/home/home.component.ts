@@ -220,6 +220,7 @@ export class HomeComponent {
     this.Aarray = [];
     this.allActualCapacities = [];
     this.PP = [];
+    this.BOOOO = [];
 
     this.counter += 1;
     console.log(this.counter);
@@ -253,8 +254,9 @@ export class HomeComponent {
                 for (let j = 0; j < this.AC.response.data.length; j++) {
                   this.Atotal += this.AC.response.data[j].value;
                 }
-                this.Aarray.push(this.Atotal);
-                console.log(this.Atotal);
+                this.Atotal = Math.round(this.Atotal);
+                this.Aarray.push(Math.round(this.Atotal));
+                console.log(Math.round(this.Atotal));
 
                 console.log(this.PP[i].fuelTypeCode);
                 this.eiaService
@@ -273,14 +275,19 @@ export class HomeComponent {
                       this.Ntotal +=
                         this.NPC.response.data[k]['nameplate-capacity-mw'];
                     }
-                    console.log(this.Ntotal);
-                    //console.log(this.allActualCapacities[i]);
+                    this.Ntotal = Math.round(this.Ntotal);
+                    this.Narray.push(Math.round(this.Ntotal));
+                    console.log(Math.round(this.Ntotal));
+
+                    this.sandboxService.ModifyCapacities(this.allPlants[i].id, this.Ntotal, this.Atotal).subscribe((result:BuiltPlant) => {
+                      let placehold:BuiltPlant = result;
+                      console.log(placehold);
+                      this.BOOOO[i] = placehold.nameplateCapacity*(placehold.ac/placehold.npc);
+                      console.log(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
+                    })
                   });
               });
           });
       }
-    });
-    // console.log(this.allActualCapacities)
-    // return this.allActualCapacities;
-  }
-}
+      return this.BOOOO;
+    })}}

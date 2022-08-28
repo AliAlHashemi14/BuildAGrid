@@ -3,6 +3,6 @@ export interface BuiltPlant {
     fuelId: number;
     nameplateCapacity:number;
     powState:boolean;
-    NPC:number;
-    AC:number;
+    npc:number;
+    ac:number;
 }

@@ -43,7 +43,7 @@ namespace Group3Project.Controllers
 
         }
 
-        [HttpPatch("ModifyCapacities/{id}")]
+        [HttpPatch("ModifyCapacities/{Id}")]
         public BuiltPlant ModifyCapacities(int Id, int NPC, int AC)
         {
             BuiltPlant modifiedPlant = context.BuiltPlants.FirstOrDefault(x => x.Id == Id);
