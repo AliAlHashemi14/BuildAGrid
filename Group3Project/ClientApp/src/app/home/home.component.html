@@ -6,6 +6,11 @@
     <p>Nameplate: {{ plant.nameplateCapacity }}</p>
     <p>Plant ID {{ plant.id }}</p>
     <p>fuel ID: {{ plant.fuelId }}</p>
+   <!--  <p>{{plant.powState}}</p>-->
+    <p *ngIf="plant.powState">Power Status: On</p>
+    <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">Power On</button>
+    <button *ngIf="plant.powState" (click)="togglePower(plant.id)">Power Off</button>
+
     <!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
   </div>
 </div>
