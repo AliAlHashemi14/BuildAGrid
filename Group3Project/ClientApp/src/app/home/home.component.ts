@@ -138,11 +138,11 @@ export class HomeComponent {
     this.sandboxService.GetAllPlants().subscribe((response: any) => {
       this.allPlants = response;
 
-      for (let i = 0; i < this.allPlants.length; i++) {
-        console.log(this.allPlants[i].fuelId);
+      this.allPlants.forEach((p:BuiltPlant) => {
+        console.log(p.fuelId);
 
         this.plantService
-          .GetPlantProps(this.allPlants[i].fuelId)
+          .GetPlantProps(p.fuelId)
           .subscribe((B: PlantProperties) => {
             this.PP.push(B);
             //console.log(this.PP);
@@ -150,11 +150,11 @@ export class HomeComponent {
             let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
             let monthdate: string = this.TODStatus.season;
 
-            console.log(this.PP[i].altCode)
+            console.log(B.altCode)
             this.eiaService
               .getActualCapacity(
                 this.TODStatus.region,
-                this.PP[i].altCode,
+                B.altCode,
                 TODDD,
                 TODDD
               )
@@ -168,11 +168,11 @@ export class HomeComponent {
                 this.Aarray.push(Math.round(this.Atotal));
                 console.log(Math.round(this.Atotal));
 
-                console.log(this.PP[i].fuelTypeCode);
+                console.log(B.fuelTypeCode);
                 this.eiaService
                   .getNameplateCapacity(
                     this.TODStatus.region,
-                    this.PP[i].fuelTypeCode,
+                    B.fuelTypeCode,
                     monthdate,
                     monthdate
                   )
@@ -189,16 +189,16 @@ export class HomeComponent {
                     this.Narray.push(Math.round(this.Ntotal));
                     console.log(Math.round(this.Ntotal));
 
-                    this.sandboxService.ModifyCapacities(this.allPlants[i].id, this.Ntotal, this.Atotal).subscribe((result:BuiltPlant) => {
+                    this.sandboxService.ModifyCapacities(p.id, this.Ntotal, this.Atotal).subscribe((result:BuiltPlant) => {
                       let placehold:BuiltPlant = result;
                       console.log(placehold);
-                      this.BOOOO[i] = placehold.nameplateCapacity*(placehold.ac/placehold.npc);
+                      this.BOOOO.push(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
                       console.log(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
                     })
                   });
               });
           });
-      }
+      });
       return this.BOOOO;
     })}}
 
