@@ -1,1 +1,11 @@
-<app-calculate-capacity></app-calculate-capacity>
+<app-tod-changer (created)="getTOD($event)"></app-tod-changer>
+<button (click)="getRatio2()">Get plants</button>
+
+<div *ngIf="loaded">
+  <div *ngFor="let plant of allPlants">
+    <p>Nameplate: {{ plant.nameplateCapacity }}</p>
+    <p>Plant ID {{ plant.id }}</p>
+    <p>fuel ID: {{ plant.fuelId }}</p>
+    <!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+  </div>
+</div>

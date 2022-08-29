@@ -30,7 +30,7 @@ export class HomeComponent {
   AC: ActualCapacity = {} as ActualCapacity;
   Narray: number[] = [];
   Aarray: number[] = [];
-  Atotal: number = 0;
+  // Atotal: number = 0;
   Ntotal: number = 0;
   allPlants: BuiltPlant[] = [];
   TODStatus: TOD = {} as TOD;
@@ -43,6 +43,7 @@ export class HomeComponent {
   offCapacity: number = 0;
   num: number = 0;
   BOOOO:number[] = [];
+  loaded:boolean = false;
 
   ngOnInit() {
     this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO' });
@@ -123,14 +124,15 @@ export class HomeComponent {
     return `${this.TODStatus.season}-28${this.TODStatus.time}`;
   }
 
-    getRatio2(): any {
+  getRatio2(): any {
     this.Ntotal = 0;
-    this.Atotal = 0;
+    let Atotal = 0;
     this.Narray = [];
     this.Aarray = [];
     this.allActualCapacities = [];
     this.PP = [];
     this.BOOOO = [];
+    this.loaded =false;
 
     this.counter += 1;
     console.log(this.counter);
@@ -159,16 +161,7 @@ export class HomeComponent {
                 TODDD
               )
               .subscribe((A: any) => {
-                this.AC = A;
-                this.Atotal = 0;
-                for (let j = 0; j < this.AC.response.data.length; j++) {
-                  this.Atotal += this.AC.response.data[j].value;
-                }
-                this.Atotal = Math.round(this.Atotal);
-                this.Aarray.push(Math.round(this.Atotal));
-                console.log(Math.round(this.Atotal));
-
-                console.log(B.fuelTypeCode);
+                
                 this.eiaService
                   .getNameplateCapacity(
                     this.TODStatus.region,
@@ -177,6 +170,18 @@ export class HomeComponent {
                     monthdate
                   )
                   .subscribe((C: Npc) => {
+                    this.AC = A;
+                  Atotal = 0;
+                  // for (let j = 0; j < this.AC.response.data.length; j++) {
+                  //   this.Atotal += this.AC.response.data[j].value; //Atotal assigned here. Why is it not getting passed right 
+                  // }
+                  this.AC.response.data.forEach((n => Atotal += n.value))
+                  console.log(`ATOTAL: ${Atotal}`);
+                  Atotal = Math.round(Atotal);
+                  this.Aarray.push(Math.round(Atotal));
+                  // console.log(Math.round(Atotal));
+
+                  console.log(B.fuelTypeCode);
                     this.NPC = C;
                     this.Ntotal = 0;
 
@@ -189,17 +194,20 @@ export class HomeComponent {
                     this.Narray.push(Math.round(this.Ntotal));
                     console.log(Math.round(this.Ntotal));
 
-                    this.sandboxService.ModifyCapacities(p.id, this.Ntotal, this.Atotal).subscribe((result:BuiltPlant) => {
+                    this.sandboxService.ModifyCapacities(p.id, this.Ntotal, Atotal).subscribe((result:BuiltPlant) => {
                       let placehold:BuiltPlant = result;
                       console.log(placehold);
                       this.BOOOO.push(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
-                      console.log(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
+                      console.log((placehold.ac/placehold.npc));
+                      this.loaded = true;
                     })
                   });
               });
           });
       });
+      
       return this.BOOOO;
+      
     })}}
 
   
