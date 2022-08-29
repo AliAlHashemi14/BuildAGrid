@@ -16,6 +16,8 @@ import { Observable, from, pipe } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+  
 })
 export class HomeComponent {
   constructor(
@@ -67,19 +69,32 @@ export class HomeComponent {
   }
 
   checkPower(id: number): any {
-    id -= 3;
+    let index = this.allPlants.findIndex(p => p.id == id)
     if (
-      this.allPlants[id].powState == true &&
-      this.allActualCapacities[id] <= this.allPlants[id].nameplateCapacity
+    this.allPlants[index].powState == undefined){
+      this.allPlants[index].powState = false
+    }
+    //should not happen
+    if (this.allPlants[index].ac == undefined){
+      this.allPlants[index].ac = 0 
+    }
+    if(this.allPlants[index].npc == undefined){
+      this.allPlants[index].npc = 1
+    }
+    if (
+      this.allPlants[index].powState == true &&
+      this.allPlants[index].ac <= this.allPlants[index].npc)
+     {
+      return (this.allPlants[index].ac / this.allPlants[index].npc) * this.allPlants[index].nameplateCapacity ;
+    } 
+    else if (
+      this.allPlants[index].powState == true &&
+      this.allPlants[index].ac > this.allPlants[index].npc
     ) {
-      return (this.BOOOO[id] = this.allActualCapacities[id]);
-    } else if (
-      this.allPlants[id].powState == true &&
-      this.allActualCapacities[id] > this.allPlants[id].nameplateCapacity
-    ) {
-      return (this.BOOOO[id] = this.allPlants[id].nameplateCapacity);
-    } else {
-      return (this.BOOOO[id] = 0);
+      return this.allPlants[index].nameplateCapacity;
+    } 
+    else {
+      return (0);
     }
   }
 
