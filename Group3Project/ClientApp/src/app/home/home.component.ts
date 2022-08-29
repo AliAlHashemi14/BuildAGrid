@@ -10,6 +10,8 @@ import { PlantProperties } from '../plant-properties';
 import { PlantService } from '../plant.service';
 import { SandboxService } from '../sandbox.service';
 import { TOD } from '../tod';
+import { concatMap, tap, mergeMap, map } from 'rxjs/operators'
+import { Observable, from, pipe } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -47,33 +49,6 @@ export class HomeComponent {
     for (let i = 0; i < this.allPlants.length; i++) {
       this.checkPower(i);
     }
-
-    //get all built plants
-    // this.sandboxService.GetAllPlants().subscribe((response: any) => {
-    //   this.allPlants = response;
-    //   this.TODStatus.region = 'MISO';
-    //   this.TODStatus.season = '2021-02';
-    //   this.TODStatus.time = 'T01';
-    //   this.getDemand();
-    // });
-    //default time of day is midday, default season is summer, default region is AZPS
-    //this gets demand for this time of day, in this region
-    //   this.eiaService.getDemand("LDWP", "2021-08-28T20", "2021-08-28T20").subscribe((response:Demand) => {this.demand = response; console.log(this.demand)});
-    //   //gets solar from LDWP -- tester
-    //   this.eiaService.getNameplateCapacity("LDWP", "SUN", "2021-08", "2021-08" ).subscribe((response:Npc) =>{this.NPC = response;
-    //   for(let i=0; i < this.NPC.response.data.length; i++){
-    //     this.Ncapacities.push(this.NPC.response.data[i]['nameplate-capacity-mw']);
-    //     this.Ntotal+=this.NPC.response.data[i]['nameplate-capacity-mw'];
-    //   }
-    // });
-    //gets actual capacity from same time as tester ^^
-    // this.eiaService.getActualCapacity("LDWP", "SUN", "2021-08-28T20", "2021-08-28T20" ).subscribe((response:ActualCapacity) => {this.AC = response;
-    //    for(let i=0; i < this.AC.response.data.length; i++){
-    //     //this.Acapacities.push(this.AC.response.data[i].value);
-    //     //console.log(this.AC.response.data[i].value);
-    //     this.Atotal+=this.AC.response.data[i].value;
-    //  }
-    // });
   }
 
   //user sets new TOD
@@ -137,83 +112,18 @@ export class HomeComponent {
     return this.allActualCapacities;
   }
 
-  //id = fuelId
-  //not currently being used
-  // getCodes(id: number): any {
-  //   this.plantService
-  //     .GetPlantProps(id)
-  //     .subscribe((response: PlantProperties) => {
-  //       response.FuelTypeCode = this.fuelTypeCode;
-  //       response.AltCode = this.altCode;
-  //     });
-  // }
+  
+  debug() {
+    return tap(data => {
+      console.log(data);
+    })
+  }
 
-  // getRatio(): any {
-  //   this.Ntotal = 0;
-  //   this.Atotal = 0;
-  //   this.Narray = [];
-  //   this.Aarray = [];
+  getTodddString(): string {
+    return `${this.TODStatus.season}-28${this.TODStatus.time}`;
+  }
 
-  //   //let ratioArray:number[] = [];
-
-  //   let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
-  //   let monthdate: string = this.TODStatus.season;
-
-  //   //getting the demand from the TOD changes.
-
-  //   //getting the actual capacity for each fuel type
-  //   console.log(this.PP[this.counter].altCode);
-  //   this.eiaService
-  //     .getActualCapacity(
-  //       this.TODStatus.region,
-  //       this.PP[this.counter].altCode,
-  //       TODDD,
-  //       TODDD
-  //     )
-  //     .subscribe((A: any) => {
-  //       this.AC = A;
-  //       this.Atotal = 0;
-  //       for (let j = 0; j < this.AC.response.data.length; j++) {
-  //         this.Atotal += this.AC.response.data[j].value;
-  //       }
-  //       this.Aarray.push(this.Atotal);
-  //       console.log(this.Aarray);
-  //     });
-
-  //   this.eiaService
-  //     .getNameplateCapacity(
-  //       this.TODStatus.region,
-  //       this.PP[this.counter].fuelTypeCode,
-  //       monthdate,
-  //       monthdate
-  //     )
-  //     .subscribe((response: Npc) => {
-  //       this.NPC = response;
-  //       this.Ntotal = 0;
-
-  //       for (let k = 0; k < this.NPC.response.data.length; k++) {
-  //         this.Ntotal += this.NPC.response.data[k]['nameplate-capacity-mw'];
-  //       }
-  //       this.Narray.push(this.Ntotal);
-  //       console.log(this.Narray);
-  //       // this.ratio = this.Atotal / this.Ntotal;
-  //       // ratioArray.push(this.ratio);
-  //       // //console.log(this.allPlants[num].powState);
-  //       // this.netCapacity = this.allPlants[i].nameplateCapacity * this.ratio;
-  //       // this.allActualCapacities.push(this.netCapacity);
-
-  //       // // if (this.allPlants[num].powState == true) {
-  //       // //   this.netCapacity.push(this.allPlants[num].nameplateCapacity * this.ratio);
-  //       // // } else {
-  //       // //   this.netCapacity.push(0);
-  //       // // }
-  //       // console.log(this.netCapacity);
-  //     });
-  //   return (this.counter += 1);
-  // }
-  // // return this.allActualCapacities;
-
-  getRatio2(): any {
+    getRatio2(): any {
     this.Ntotal = 0;
     this.Atotal = 0;
     this.Narray = [];
@@ -291,3 +201,5 @@ export class HomeComponent {
       }
       return this.BOOOO;
     })}}
+
+  
