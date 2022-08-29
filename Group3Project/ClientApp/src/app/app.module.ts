@@ -12,6 +12,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CreateAPlantComponent } from './create-aplant/create-aplant.component';
 import { TODChangerComponent } from './tod-changer/tod-changer.component';
 import { ListOfPlantsComponent } from './list-of-plants/list-of-plants.component';
+import { CalculateCapacityComponent } from './calculate-capacity/calculate-capacity.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ListOfPlantsComponent } from './list-of-plants/list-of-plants.component
     FetchDataComponent,
     CreateAPlantComponent,
     TODChangerComponent,
-    ListOfPlantsComponent
+    ListOfPlantsComponent,
+    CalculateCapacityComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,6 +36,7 @@ import { ListOfPlantsComponent } from './list-of-plants/list-of-plants.component
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'add-plant', component: CreateAPlantComponent },
       { path: 'tod-changer', component: TODChangerComponent },
+      { path: 'calc-cap', component: CalculateCapacityComponent },
     ])
   ],
   providers: [],
