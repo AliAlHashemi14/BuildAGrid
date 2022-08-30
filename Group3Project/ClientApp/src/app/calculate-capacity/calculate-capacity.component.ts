@@ -40,6 +40,8 @@ export class CalculateCapacityComponent implements OnInit {
   loaded:boolean = false;
   demand: Demand = {} as Demand;
   total:number = 0;
+  showTODMenu:boolean = false;
+  showAddPlant:boolean = false;
 
   constructor(
     private eiaService: EiaServiceService,
@@ -130,6 +132,8 @@ ngOnInit() {
   // for (let i = 0; i < this.allPlants.length; i++) {
   //   this.checkPower(i);
   // }
+
+  this.getDemand();
 }
 
 //user sets new TOD
@@ -145,6 +149,14 @@ togglePower(id: number): any {
   this.allPlants[index].powState = !this.allPlants[index].powState;
   this.checkPower(id);
   return this.allPlants[index].powState;
+}
+
+toggleTODMenu(){
+  this.showTODMenu = !this.showTODMenu;
+}
+
+toggleAddPlant(){
+  this.showAddPlant = !this.showAddPlant;
 }
 
 checkPower(id: number): any {

@@ -14,3 +14,13 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+button{
+  color: black;
+  background-color: #d5e6b4;
+  border-color: #d5e6b4;
+}
+
+*{
+  font-family: 'Quicksand', sans-serif;
+}
