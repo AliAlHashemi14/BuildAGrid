@@ -21,208 +21,204 @@ import { Observable, from, pipe } from 'rxjs';
 })
 export class HomeComponent {
   constructor(
-    private eiaService: EiaServiceService,
-    private sandboxService: SandboxService,
-    private plantService: PlantService
+    // private eiaService: EiaServiceService,
+    // private sandboxService: SandboxService,
+    // private plantService: PlantService
   ) {}
 
   //Demand object stores a lot of demand data.
-  demand: Demand = {} as Demand;
-  NPC: Npc = {} as Npc;
-  AC: ActualCapacity = {} as ActualCapacity;
-  Narray: number[] = [];
-  Aarray: number[] = [];
-  // Atotal: number = 0;
-  Ntotal: number = 0;
-  allPlants: BuiltPlant[] = [];
-  TODStatus: TOD = {} as TOD;
-  ratios: number[] = [];
-  PP: PlantProperties[] = [];
-  allActualCapacities: number[] = [];
-  netCapacity: number = {} as number;
-  numberInAC: number = -1;
-  counter: number = -1;
-  offCapacity: number = 0;
-  num: number = 0;
-  BOOOO:number[] = [];
-  loaded:boolean = false;
+  // demand: Demand = {} as Demand;
+  // NPC: Npc = {} as Npc;
+  // AC: ActualCapacity = {} as ActualCapacity;
+  // Narray: number[] = [];
+  // Aarray: number[] = [];
+  // // Atotal: number = 0;
+  // Ntotal: number = 0;
+  // allPlants: BuiltPlant[] = [];
+  // TODStatus: TOD = {} as TOD;
+  // ratios: number[] = [];
+  // PP: PlantProperties[] = [];
+  // allActualCapacities: number[] = [];
+  // netCapacity: number = {} as number;
+  // numberInAC: number = -1;
+  // counter: number = -1;
+  // offCapacity: number = 0;
+  // num: number = 0;
+  // BOOOO:number[] = [];
+  // loaded:boolean = false;
 
   ngOnInit() {
-    this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO' });
-    for (let i = 0; i < this.allPlants.length; i++) {
-      this.checkPower(i);
-    }
   }
 
-  //user sets new TOD
-  getTOD(newTOD: TOD) {
-    this.TODStatus = newTOD;
-    return this.TODStatus;
-    //console.log(this.TODStatus.season)
-  }
+  // //user sets new TOD
+  // getTOD(newTOD: TOD) {
+  //   this.TODStatus = newTOD;
+  //   return this.TODStatus;
+  //   //console.log(this.TODStatus.season)
+  // }
 
-  togglePower(id: number): any {
-    id -= 3;
-    this.allPlants[id].powState = !this.allPlants[id].powState;
-    this.checkPower(id);
-    return this.allPlants[id].powState;
-  }
+  // togglePower(id: number): any {
+  //   id -= 3;
+  //   this.allPlants[id].powState = !this.allPlants[id].powState;
+  //   this.checkPower(id);
+  //   return this.allPlants[id].powState;
+  // }
 
-  checkPower(id: number): any {
-    let index = this.allPlants.findIndex(p => p.id == id)
-    if (
-    this.allPlants[index].powState == undefined){
-      this.allPlants[index].powState = false
-    }
-    //should not happen
-    if (this.allPlants[index].ac == undefined){
-      this.allPlants[index].ac = 0 
-    }
-    if(this.allPlants[index].npc == undefined){
-      this.allPlants[index].npc = 1
-    }
-    if (
-      this.allPlants[index].powState == true &&
-      this.allPlants[index].ac <= this.allPlants[index].npc)
-     {
-      return (this.allPlants[index].ac / this.allPlants[index].npc) * this.allPlants[index].nameplateCapacity ;
-    } 
-    else if (
-      this.allPlants[index].powState == true &&
-      this.allPlants[index].ac > this.allPlants[index].npc
-    ) {
-      return this.allPlants[index].nameplateCapacity;
-    } 
-    else {
-      return (0);
-    }
-  }
+  // checkPower(id: number): any {
+  //   let index = this.allPlants.findIndex(p => p.id == id)
+  //   if (
+  //   this.allPlants[index].powState == undefined){
+  //     this.allPlants[index].powState = false
+  //   }
+  //   //should not happen
+  //   if (this.allPlants[index].ac == undefined){
+  //     this.allPlants[index].ac = 0 
+  //   }
+  //   if(this.allPlants[index].npc == undefined){
+  //     this.allPlants[index].npc = 1
+  //   }
+  //   if (
+  //     this.allPlants[index].powState == true &&
+  //     this.allPlants[index].ac <= this.allPlants[index].npc)
+  //    {
+  //     return (this.allPlants[index].ac / this.allPlants[index].npc) * this.allPlants[index].nameplateCapacity ;
+  //   } 
+  //   else if (
+  //     this.allPlants[index].powState == true &&
+  //     this.allPlants[index].ac > this.allPlants[index].npc
+  //   ) {
+  //     return this.allPlants[index].nameplateCapacity;
+  //   } 
+  //   else {
+  //     return (0);
+  //   }
+  // }
 
-  getBuiltPlants(): any {
-    this.sandboxService.GetAllPlants().subscribe((response: any) => {
-      this.allPlants = response;
-    });
-  }
+  // getBuiltPlants(): any {
+  //   this.sandboxService.GetAllPlants().subscribe((response: any) => {
+  //     this.allPlants = response;
+  //   });
+  // }
 
-  getDemand(): any {
-    let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
-    this.eiaService
-      .getDemand(this.TODStatus.region, TODDD, TODDD)
-      .subscribe((response: Demand) => {
-        this.demand = response;
-        return this.demand;
-      });
-  }
+  // getDemand(): any {
+  //   let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
+  //   this.eiaService
+  //     .getDemand(this.TODStatus.region, TODDD, TODDD)
+  //     .subscribe((response: Demand) => {
+  //       this.demand = response;
+  //       return this.demand;
+  //     });
+  // }
 
-  holyFuck(): any {
-    console.log(this.Aarray);
-    console.log(this.Narray);
-    for (let i = 0; i < this.Narray.length; i++) {
-      //console.log(this.ratios);
+  // holyFuck(): any {
+  //   console.log(this.Aarray);
+  //   console.log(this.Narray);
+  //   for (let i = 0; i < this.Narray.length; i++) {
+  //     //console.log(this.ratios);
 
-      this.allActualCapacities.push(
-        (this.Aarray[i] / this.Narray[i]) * this.allPlants[i].nameplateCapacity
-      );
-    }
-    console.log(this.allActualCapacities)
-    return this.allActualCapacities;
-  }
+  //     this.allActualCapacities.push(
+  //       (this.Aarray[i] / this.Narray[i]) * this.allPlants[i].nameplateCapacity
+  //     );
+  //   }
+  //   console.log(this.allActualCapacities)
+  //   return this.allActualCapacities;
+  // }
 
   
-  debug() {
-    return tap(data => {
-      console.log(data);
-    })
-  }
+  // debug() {
+  //   return tap(data => {
+  //     console.log(data);
+  //   })
+  // }
 
-  getTodddString(): string {
-    return `${this.TODStatus.season}-28${this.TODStatus.time}`;
-  }
+  // getTodddString(): string {
+  //   return `${this.TODStatus.season}-28${this.TODStatus.time}`;
+  // }
 
-  getRatio2(): any {
-    this.Ntotal = 0;
-    let Atotal = 0;
-    this.Narray = [];
-    this.Aarray = [];
-    this.allActualCapacities = [];
-    this.PP = [];
-    this.BOOOO = [];
-    this.loaded =false;
+  // getRatio2(): any {
+  //   this.Ntotal = 0;
+  //   let Atotal = 0;
+  //   this.Narray = [];
+  //   this.Aarray = [];
+  //   this.allActualCapacities = [];
+  //   this.PP = [];
+  //   this.BOOOO = [];
+  //   this.loaded =false;
 
-    this.counter += 1;
-    console.log(this.counter);
+  //   this.counter += 1;
+  //   console.log(this.counter);
 
-    this.sandboxService.GetAllPlants().subscribe((response: any) => {
-      this.allPlants = response;
+  //   this.sandboxService.GetAllPlants().subscribe((response: any) => {
+  //     this.allPlants = response;
 
-      this.allPlants.forEach((p:BuiltPlant) => {
-        console.log(p.fuelId);
+  //     this.allPlants.forEach((p:BuiltPlant) => {
+  //       console.log(p.fuelId);
 
-        this.plantService
-          .GetPlantProps(p.fuelId)
-          .subscribe((B: PlantProperties) => {
-            this.PP.push(B);
-            //console.log(this.PP);
+  //       this.plantService
+  //         .GetPlantProps(p.fuelId)
+  //         .subscribe((B: PlantProperties) => {
+  //           this.PP.push(B);
+  //           //console.log(this.PP);
 
-            let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
-            let monthdate: string = this.TODStatus.season;
+  //           let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
+  //           let monthdate: string = this.TODStatus.season;
 
-            console.log(B.altCode)
-            this.eiaService
-              .getActualCapacity(
-                this.TODStatus.region,
-                B.altCode,
-                TODDD,
-                TODDD
-              )
-              .subscribe((A: any) => {
+  //           console.log(B.altCode)
+  //           this.eiaService
+  //             .getActualCapacity(
+  //               this.TODStatus.region,
+  //               B.altCode,
+  //               TODDD,
+  //               TODDD
+  //             )
+  //             .subscribe((A: any) => {
                 
-                this.eiaService
-                  .getNameplateCapacity(
-                    this.TODStatus.region,
-                    B.fuelTypeCode,
-                    monthdate,
-                    monthdate
-                  )
-                  .subscribe((C: Npc) => {
-                    this.AC = A;
-                  Atotal = 0;
-                  // for (let j = 0; j < this.AC.response.data.length; j++) {
-                  //   this.Atotal += this.AC.response.data[j].value; //Atotal assigned here. Why is it not getting passed right 
-                  // }
-                  this.AC.response.data.forEach((n => Atotal += n.value))
-                  console.log(`ATOTAL: ${Atotal}`);
-                  Atotal = Math.round(Atotal);
-                  this.Aarray.push(Math.round(Atotal));
-                  // console.log(Math.round(Atotal));
+  //               this.eiaService
+  //                 .getNameplateCapacity(
+  //                   this.TODStatus.region,
+  //                   B.fuelTypeCode,
+  //                   monthdate,
+  //                   monthdate
+  //                 )
+  //                 .subscribe((C: Npc) => {
+  //                   this.AC = A;
+  //                 Atotal = 0;
+  //                 // for (let j = 0; j < this.AC.response.data.length; j++) {
+  //                 //   this.Atotal += this.AC.response.data[j].value; //Atotal assigned here. Why is it not getting passed right 
+  //                 // }
+  //                 this.AC.response.data.forEach((n => Atotal += n.value))
+  //                 console.log(`ATOTAL: ${Atotal}`);
+  //                 Atotal = Math.round(Atotal);
+  //                 this.Aarray.push(Math.round(Atotal));
+  //                 // console.log(Math.round(Atotal));
 
-                  console.log(B.fuelTypeCode);
-                    this.NPC = C;
-                    this.Ntotal = 0;
+  //                 console.log(B.fuelTypeCode);
+  //                   this.NPC = C;
+  //                   this.Ntotal = 0;
 
-                    for (let k = 0; k < this.NPC.response.data.length; k++) {
-                      //console.log(this.NPC.response.data[k]['nameplate-capacity-mw'])
-                      this.Ntotal +=
-                        this.NPC.response.data[k]['nameplate-capacity-mw'];
-                    }
-                    this.Ntotal = Math.round(this.Ntotal);
-                    this.Narray.push(Math.round(this.Ntotal));
-                    console.log(Math.round(this.Ntotal));
+  //                   for (let k = 0; k < this.NPC.response.data.length; k++) {
+  //                     //console.log(this.NPC.response.data[k]['nameplate-capacity-mw'])
+  //                     this.Ntotal +=
+  //                       this.NPC.response.data[k]['nameplate-capacity-mw'];
+  //                   }
+  //                   this.Ntotal = Math.round(this.Ntotal);
+  //                   this.Narray.push(Math.round(this.Ntotal));
+  //                   console.log(Math.round(this.Ntotal));
 
-                    this.sandboxService.ModifyCapacities(p.id, this.Ntotal, Atotal).subscribe((result:BuiltPlant) => {
-                      let placehold:BuiltPlant = result;
-                      console.log(placehold);
-                      this.BOOOO.push(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
-                      console.log((placehold.ac/placehold.npc));
-                      this.loaded = true;
-                    })
-                  });
-              });
-          });
-      });
+  //                   this.sandboxService.ModifyCapacities(p.id, this.Ntotal, Atotal).subscribe((result:BuiltPlant) => {
+  //                     let placehold:BuiltPlant = result;
+  //                     console.log(placehold);
+  //                     this.BOOOO.push(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
+  //                     console.log((placehold.ac/placehold.npc));
+  //                     this.loaded = true;
+  //                   })
+  //                 });
+  //             });
+  //         });
+  //     });
       
-      return this.BOOOO;
+  //     return this.BOOOO;
       
-    })}}
+  //   })}}
 
-  
+}

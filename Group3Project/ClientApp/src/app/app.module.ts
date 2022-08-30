@@ -24,7 +24,7 @@ import { CalculateCapacityComponent } from './calculate-capacity/calculate-capac
     CreateAPlantComponent,
     TODChangerComponent,
     ListOfPlantsComponent,
-    CalculateCapacityComponent
+    CalculateCapacityComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,6 +37,7 @@ import { CalculateCapacityComponent } from './calculate-capacity/calculate-capac
       { path: 'add-plant', component: CreateAPlantComponent },
       { path: 'tod-changer', component: TODChangerComponent },
       { path: 'calc-cap', component: CalculateCapacityComponent },
+      
     ])
   ],
   providers: [],
