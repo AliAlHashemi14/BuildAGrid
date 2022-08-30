@@ -1,54 +1,108 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <app-tod-changer (created)="getTOD($event)"></app-tod-changer>
-        <button (click)="getDemand()">0) and 2) Update Demand</button>
-        <button (click)="getRatio2()">3) Get plants</button>
-        <button (click)="calculateTotal()">4) Calculate Current Output</button>
-      </div>
-      <div class="card">
-        <p>Producing {{ total }}MW of Required {{ demand.response.data[0].value * 0.1 }} MW</p>
-        <p *ngIf="demand.response.data[0].value * 0.1 < total">
-          You have saved the city, congratulations!
-        </p>
-        <p *ngIf="demand.response.data[0].value * 0.1 >= total">
-          Millions are without power, fabulous.
-        </p>
+<div id="border">
+  <div
+    id="sky"
+    class="container"
+    [ngClass]="{
+      Night: TODStatus.time == 'T10',
+      Morning: TODStatus.time == 'T14',
+      Midday: TODStatus.time == 'T20',
+      Evening: TODStatus.time == 'T01'
+    }"
+  >
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <div class="card">
+          <app-tod-changer (created)="getTOD($event)"></app-tod-changer>
+          <button (click)="getDemand()">0) and 2) Update Demand</button>
+          <button (click)="getRatio2()">3) Get plants</button>
+          <button (click)="calculateTotal()">
+            4) Calculate Current Output
+          </button>
+        </div>
+        <div class="offset-md-4 col-md-6 col-12">
+          <div class="card">
+            <p>
+              Producing {{ total }}MW of Required
+              {{ demand.response.data[0].value * 0.1 }} MW
+            </p>
+            <p *ngIf="demand.response.data[0].value * 0.1 < total">
+              You have saved the city, congratulations!
+            </p>
+            <p *ngIf="demand.response.data[0].value * 0.1 >= total">
+              Millions are without power, fabulous.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <div
+    id="ground"
+    class="container"
+    [ngClass]="{
+      Winter: TODStatus.season == '2021-02',
+      Spring: TODStatus.season == '2021-04',
+      Summer: TODStatus.season == '2021-08',
+      Fall: TODStatus.season == '2021-10'
+    }"
+  >
+    <div class="row" *ngIf="loaded">
+      <div class="col-md-2 col-sm-6 col-6" *ngFor="let plant of allPlants">
+        <!-- [ngClass]="{ Running: plant.powState, Off: !plant.powState }" -->
 
-<div class="container">
-  <div class="row" *ngIf="loaded">
-    
-      <div class="col-md-2" *ngFor="let plant of allPlants" [ngClass]="{ Running: plant.powState, Off: !plant.powState }">
-        <div class="card">
+        <div
+          class="card mt-3"
+          [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
+        >
           <div class="card-body">
-          <!-- <img src="../../assets/LEAF.png" /> -->
-          <p>{{ checkPower(plant.id) }} MW / {{ plant.nameplateCapacity }} MW</p>
-          <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
-          <img *ngIf="plant.fuelId==1" src="../../assets/nuclear.png" />
-          <img *ngIf="plant.fuelId==2" src="../../assets/natural_gas.png" />
-          <img *ngIf="plant.fuelId==3" src="../../assets/Coal-power-plant.png" />
-          <img *ngIf="plant.fuelId==5" src="../../assets/Hydroelectric-power-plant.png" />
-          <img *ngIf="plant.fuelId==6" src="../../assets/Wind-power.svg" />
-          <img *ngIf="plant.fuelId==7" src="../../assets/Solar-energy.png"/>
-          <!--  <p>{{plant.powState}}</p>-->
-          <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
-            Power On
-          </button>
-          <button *ngIf="plant.powState" (click)="togglePower(plant.id)">
-            Power Off
-          </button>
-          <button (click)="removePlant(plant.id)">Delete Plant</button>
-        </div>
-        </div>
+            <!-- <img src="../../assets/LEAF.png" /> -->
+            <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
+              Power On
+            </button>
+            <button *ngIf="plant.powState" (click)="togglePower(plant.id)">
+              Power Off
+            </button>
+            <p>{{ checkPower(plant.id) }} / {{ plant.nameplateCapacity }} MW</p>
+            <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 1"
+              src="../../assets/nuclear.png"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 2"
+              src="../../assets/natural_gas.png"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 3"
+              src="../../assets/Coal-power-plant.png"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 5"
+              src="../../assets/Hydroelectric-power-plant.png"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 6"
+              src="../../assets/Wind-power.svg"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 7"
+              src="../../assets/Solar-energy.png"
+            />
+            <!--  <p>{{plant.powState}}</p>-->
+
+            <button (click)="removePlant(plant.id)">Delete Plant</button>
+          </div>
         </div>
       </div>
-      <!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+    </div>
+    <!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
   </div>
-<br />
-<!-- <img class="tester" src="../../assets/LEAF.png" /> -->
+  <!-- <img class="tester" src="../../assets/LEAF.png" /> -->
+</div>

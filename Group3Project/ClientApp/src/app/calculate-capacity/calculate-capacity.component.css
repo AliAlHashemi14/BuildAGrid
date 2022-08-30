@@ -2,19 +2,22 @@
     border: 2px black;
 }
 .Running{
-    color: green
+    /* color: green; */
+    background-color: #a4de73;
     
 }
 
 .Running img{
-    filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(60%);
+    /* filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(60%); */
     /* filter: hue-rotate(130deg) sepia(13%) saturate(3207%)invert(48%); */
 
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
+    color: 
+    #51544f;
 }
 .tester{
-    filter: invert(48%) sepia(13%) saturate(1000%) hue-rotate(18deg) brightness(95%) contrast(60%);
+    /* filter: invert(48%) sepia(13%) saturate(1000%) hue-rotate(18deg) brightness(95%) contrast(60%); */
     /* filter: hue-rotate(130deg) sepia(13%) saturate(3207%)invert(48%); */
 
     width: 100px;
@@ -22,13 +25,66 @@
 }
 
 .Off {
-    color: #e65245;
+    /* color: #e65245; */
+    background-color: #f65a83;
     
 }
 
 .Off img {
     /* filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%); */
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     filter:hue-rotate(0deg);
+    color: 
+    #51544f;
+}
+
+.Display{
+    color: 
+    #51544f;
+}
+
+
+.Night{
+    background-color: 
+    #295a94;
+}
+
+.Morning{
+    background-color: #5294d5;
+}
+
+.Midday{
+    background-color: 
+    #62bdff;
+}
+
+.Evening{
+    background: linear-gradient(0deg, rgba(255,164,189,1) 0%, rgba(246,230,74,1) 100%);
+
+}
+
+.Winter{
+    background-color: 
+    #d9d9d9;
+}
+
+.Spring{
+    background-color: 
+    #73c55a;
+}
+
+.Summer{
+    background-color: 
+    #5a9452;
+}
+
+.Fall{
+    background-color: 
+    #d1ab59;
+}
+
+#border{
+    border: 5px black solid;
+    
 }
