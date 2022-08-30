@@ -127,9 +127,9 @@ export class CalculateCapacityComponent implements OnInit {
 
 ngOnInit() {
   this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO' });
-  for (let i = 0; i < this.allPlants.length; i++) {
-    this.checkPower(i);
-  }
+  // for (let i = 0; i < this.allPlants.length; i++) {
+  //   this.checkPower(i);
+  // }
 }
 
 //user sets new TOD
@@ -229,6 +229,12 @@ calculateTotal():any {
   }); 
   console.log(this.total) 
   return this.total;
+}
+
+removePlant(id:number):any{
+  //let index = this.allPlants.findIndex(p => p.id == id)
+  this.sandboxService.DestroyAPlant(id).subscribe(
+  );
 }
 
 getRatio2(): any {
