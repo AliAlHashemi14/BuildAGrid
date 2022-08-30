@@ -164,7 +164,7 @@ checkPower(id: number): any {
     this.allPlants[index].powState == true &&
     this.allPlants[index].ac <= this.allPlants[index].npc)
    {
-    return (this.allPlants[index].ac / this.allPlants[index].npc) * this.allPlants[index].nameplateCapacity ;
+    return Math.round((this.allPlants[index].ac / this.allPlants[index].npc) * this.allPlants[index].nameplateCapacity) ;
   } 
   else if (
     this.allPlants[index].powState == true &&
@@ -232,7 +232,8 @@ calculateTotal():any {
 }
 
 removePlant(id:number):any{
-  //let index = this.allPlants.findIndex(p => p.id == id)
+  let index = this.allPlants.findIndex(p => p.id == id)
+  this.allPlants.splice(index, 1);
   this.sandboxService.DestroyAPlant(id).subscribe(
   );
 }
