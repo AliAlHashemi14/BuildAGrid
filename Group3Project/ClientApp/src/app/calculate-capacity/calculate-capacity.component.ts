@@ -39,6 +39,7 @@ export class CalculateCapacityComponent implements OnInit {
   displayCapacity:number = {} as number;
   loaded:boolean = false;
   demand: Demand = {} as Demand;
+  total:number = 0;
 
   constructor(
     private eiaService: EiaServiceService,
@@ -140,10 +141,10 @@ getTOD(newTOD: TOD) {
 
 
 togglePower(id: number): any {
-  id -= 3;
-  this.allPlants[id].powState = !this.allPlants[id].powState;
+  let index = this.allPlants.findIndex(p => p.id == id)
+  this.allPlants[index].powState = !this.allPlants[index].powState;
   this.checkPower(id);
-  return this.allPlants[id].powState;
+  return this.allPlants[index].powState;
 }
 
 checkPower(id: number): any {
@@ -176,11 +177,13 @@ checkPower(id: number): any {
   }
 }
 
+
 getBuiltPlants(): any {
   this.sandboxService.GetAllPlants().subscribe((response: any) => {
     this.allPlants = response;
   });
 }
+
 
 getDemand(): any {
   let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
@@ -188,6 +191,7 @@ getDemand(): any {
     .getDemand(this.TODStatus.region, TODDD, TODDD)
     .subscribe((response: Demand) => {
       this.demand = response;
+      //we are scaling this back quite a bit, so the user doesn't have to add 60 power plants lol 
       return this.demand;
     });
 }
@@ -215,6 +219,16 @@ debug() {
 
 getTodddString(): string {
   return `${this.TODStatus.season}-28${this.TODStatus.time}`;
+}
+
+
+calculateTotal():any {
+  this.total = 0;
+  this.allPlants.forEach((p:BuiltPlant) => {
+    this.total += this.checkPower(p.id)  //returns check power for each plants
+  }); 
+  console.log(this.total) 
+  return this.total;
 }
 
 getRatio2(): any {
