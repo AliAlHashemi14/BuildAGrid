@@ -1,7 +1,7 @@
 <form #postForm="ngForm" (ngSubmit)="newPlant(postForm)">
     <!-- <input type="number" name="fuelId" placeholder="ID number of Fuel" (input)="changeLimit($event)" ngModel/> -->
     <select name="plantType" (input)="changeLimit($event)" ngModel > 
-        <option *ngFor="let plant of plantData"  [ngValue]="plant.id"  >{{plant.fuelType}}</option>
+        <option *ngFor="let plant of plantData"  value= {{plant.id}}  >{{plant.fuelType}}</option>
     </select>
 
     <br>
