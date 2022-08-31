@@ -12,16 +12,16 @@
           <button (click)="toggleAddPlant()">Add Plant</button>
         </span>
         <div *ngIf="showAddPlant">
-          <app-create-aplant></app-create-aplant>
+          <app-create-aplant (created)="newPlantAdmin()"></app-create-aplant>
         </div>
         <div class="card" *ngIf="showTODMenu">
           <app-tod-changer (created)="getTOD($event)"></app-tod-changer>
-          <button (click)="getDemand()">0) and 2) Update Demand</button>
+          <!-- <button (click)="getDemand()">0) and 2) Update Demand</button>
           <button (click)="getRatio2()">3) Get plants</button>
           <button (click)="calculateTotal()">
             4) Calculate Current Output
           </button>
-          <button (click)="calcProgressBar()">Update Progress Bar</button>
+          <button (click)="calcProgressBar()">Update Progress Bar</button> -->
         </div>
       </div>
       <div class="row">
@@ -61,9 +61,8 @@
       Fall: TODStatus.season == '2021-10'
     }">
     <div class="row" *ngIf="loaded">
-      <div class="col-md-2 col-sm-6 col-6" *ngFor="let plant of allPlants">
+      <div class="col-md-2 col-sm-6 col-6" *ngFor="let plant of getAllPlants()" >
         <!-- [ngClass]="{ Running: plant.powState, Off: !plant.powState }" -->
-
         <div class="card mt-3" [ngClass]="{ Running: plant.powState, Off: !plant.powState }">
           <div class="card-body">
             <!-- <img src="../../assets/LEAF.png" /> -->

@@ -47,13 +47,14 @@ export class CreateAPlantComponent implements OnInit {
     
   }
 
-  newPlant(form:NgForm):void{
+  async newPlant(form:NgForm):Promise<void>{
     // this.plant.fuelId = form.form.value.plantType.id;
     // this.plant.namplateCapacity = form.form.value.npcValues;
     // this.plant.powState = false;
     console.log(form.form.value.plantType);
     console.log(form.form.value.npcValues);
-    this.sandboxService.AddAPlant(form.form.value.plantType, form.form.value.npcValues).subscribe((response:any) =>console.log(response));
+    await this.sandboxService.AddAPlant(form.form.value.plantType, form.form.value.npcValues).subscribe((response:any) =>{console.log(response);
+       this.created.emit(response);});
     //this.sandboxService.GetAllPlants().subscribe((result:any) =>console.log(result))
   }
 

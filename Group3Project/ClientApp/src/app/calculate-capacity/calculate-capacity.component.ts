@@ -143,6 +143,8 @@ ngOnInit() {
   // }
 
   this.getDemand();
+
+  this.getRatio2();
 }
 
 // setBars() {
@@ -153,17 +155,32 @@ ngOnInit() {
 // }
 
 //user sets new TOD
-getTOD(newTOD: TOD) {
+async getTOD(newTOD: TOD) {
   this.TODStatus = newTOD;
+  this.getDemand();
+  this.getRatio2();
   return this.TODStatus;
   //console.log(this.TODStatus.season)
 }
 
+getAllPlants():BuiltPlant[]{
+  return this.allPlants
+}
+
+delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 togglePower(id: number): any {
   let index = this.allPlants.findIndex(p => p.id == id)
   this.allPlants[index].powState = !this.allPlants[index].powState;
+  console.log(id)
+  console.log(index)
+ 
   this.checkPower(id);
+  this.calculateTotal();
+  this.calcProgressBar();
+  console.log(this.allPlants[index])
   return this.allPlants[index].powState;
 }
 
@@ -198,17 +215,19 @@ calcTotalByType(fuelId:number):any{
 
 checkPower(id: number): any {
   let index = this.allPlants.findIndex(p => p.id == id)
+  //console.log(this.allPlants[index]);
   if (
   this.allPlants[index].powState == undefined){
     this.allPlants[index].powState = false
   }
   //should not happen
-  if (this.allPlants[index].ac == undefined){
-    this.allPlants[index].ac = 0 
-  }
-  if(this.allPlants[index].npc == undefined){
-    this.allPlants[index].npc = 1
-  }
+  // if (this.allPlants[index].ac == undefined){
+  //   this.allPlants[index].ac = 0 
+  //   console.log("got in here")
+  // }
+  // if(this.allPlants[index].npc == undefined){
+  //   this.allPlants[index].npc = 1
+  // }
   if (
     this.allPlants[index].powState == true &&
     this.allPlants[index].ac <= this.allPlants[index].npc)
@@ -234,9 +253,9 @@ getBuiltPlants(): any {
 }
 
 
-getDemand(): any {
+async getDemand(): Promise<any> {
   let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
-  this.eiaService
+  await this.eiaService
     .getDemand(this.TODStatus.region, TODDD, TODDD)
     .subscribe((response: Demand) => {
       this.demand = response;
@@ -245,26 +264,6 @@ getDemand(): any {
     });
 }
 
-holyFuck(): any {
-  console.log(this.Aarray);
-  console.log(this.Narray);
-  for (let i = 0; i < this.Narray.length; i++) {
-    //console.log(this.ratios);
-
-    this.allActualCapacities.push(
-      (this.Aarray[i] / this.Narray[i]) * this.allPlants[i].nameplateCapacity
-    );
-  }
-  console.log(this.allActualCapacities)
-  return this.allActualCapacities;
-}
-
-
-debug() {
-  return tap(data => {
-    console.log(data);
-  })
-}
 
 getTodddString(): string {
   return `${this.TODStatus.season}-28${this.TODStatus.time}`;
@@ -279,7 +278,7 @@ calculateTotal():any {
     
     this.total += this.checkPower(p.id)  //returns check power for each plants
   }); 
-  console.log(this.total) 
+  //console.log(this.total) 
   return this.total;
 }
 
@@ -290,7 +289,11 @@ removePlant(id:number):any{
   );
 }
 
-getRatio2(): any {
+newPlantAdmin():any{
+  this.getTOD(this.TODStatus);
+}
+
+async getRatio2(): Promise<any> {
   this.Ntotal = 0;
   let Atotal = 0;
   this.Narray = [];
@@ -303,9 +306,9 @@ getRatio2(): any {
   this.counter += 1;
   console.log(this.counter);
 
-  this.sandboxService.GetAllPlants().subscribe((response: any) => {
+  await this.sandboxService.GetAllPlants().subscribe((response: any) => {
     this.allPlants = response;
-
+    console.log(this.allPlants)
     this.allPlants.forEach((p:BuiltPlant) => {
       console.log(p.fuelId);
 
@@ -366,6 +369,8 @@ getRatio2(): any {
                     this.BOOOO.push(placehold.nameplateCapacity*(placehold.ac/placehold.npc));
                     console.log((placehold.ac/placehold.npc));
                     this.loaded = true;
+                    p.ac=placehold.ac;
+                    p.npc = placehold.npc;
                   })
                 });
             });
