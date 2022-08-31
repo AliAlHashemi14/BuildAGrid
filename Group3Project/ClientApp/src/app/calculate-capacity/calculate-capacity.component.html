@@ -1,10 +1,14 @@
 <div id="border">
-  <div id="sky" class="container" [ngClass]="{
+  <div
+    id="sky"
+    class="container"
+    [ngClass]="{
       Night: TODStatus.time == 'T10',
       Morning: TODStatus.time == 'T14',
       Midday: TODStatus.time == 'T20',
       Evening: TODStatus.time == 'T01'
-    }">
+    }"
+  >
     <div class="row">
       <div class="col-md-6 col-12">
         <span>
@@ -26,17 +30,56 @@
       </div>
       <div class="row">
         <div class="offset-md-3 col-md-6 col-12">
-          <div class="card" style="
+          <div
+            class="card"
+            style="
               box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
               text-align: center;
-            ">
+            "
+          >
             <div class="progress">
-              <div class="progress-bar" role="progressbar" aria-label="nuclear" style="width: {{ nuke }}%" title="Nuclear"></div>
-              <div class="progress-bar bg-danger" role="progressbar" aria-label="natural gas" style="width: {{ng}}%" title="Natural Gas"></div>
-              <div class="progress-bar bg-info" role="progressbar" aria-label="coal" style="width: {{coal}}%" title="Coal"></div>
-              <div class="progress-bar bg-success" role="progressbar" aria-label="hydro" style="width: {{hydro}}%" title="Hydroelectric"></div>
-              <div class="progress-bar bg-warning" role="progressbar" aria-label="wind" style="width: {{wind}}%" title="Wind"></div>
-              <div class="progress-bar bg-secondary" role="progressbar" aria-label="solar" style="width: {{sun}}%" title="Solar (PV)"></div>
+              <div
+                class="progress-bar"
+                role="progressbar"
+                aria-label="nuclear"
+                style="width: {{ nuke }}%"
+                title="Nuclear"
+              ></div>
+              <div
+                class="progress-bar bg-danger"
+                role="progressbar"
+                aria-label="natural gas"
+                style="width: {{ ng }}%"
+                title="Natural Gas"
+              ></div>
+              <div
+                class="progress-bar bg-info"
+                role="progressbar"
+                aria-label="coal"
+                style="width: {{ coal }}%"
+                title="Coal"
+              ></div>
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                aria-label="hydro"
+                style="width: {{ hydro }}%"
+                title="Hydroelectric"
+              ></div>
+              <div
+                class="progress-bar bg-warning"
+                role="progressbar"
+                aria-label="wind"
+                style="width: {{ wind }}%"
+                title="Wind"
+              ></div>
+              <div
+                class="progress-bar bg-secondary"
+                role="progressbar"
+                aria-label="solar"
+                style="width: {{ sun }}%"
+                title="Solar (PV)"
+              ></div>
             </div>
             <p>
               Producing {{ total }}MW of Required
@@ -46,7 +89,8 @@
               You have successfully powered the region!
             </p>
             <p *ngIf="demand.response.data[0].value * 0.1 >= total">
-              There is not enough electricity to meet demand. Consider turning on or building additional power plants.
+              There is not enough electricity to meet demand. Consider turning
+              on or building additional power plants.
             </p>
           </div>
         </div>
@@ -54,16 +98,23 @@
     </div>
   </div>
 
-  <div id="ground" class="container" [ngClass]="{
+  <div
+    id="ground"
+    class="container"
+    [ngClass]="{
       Winter: TODStatus.season == '2021-02',
       Spring: TODStatus.season == '2021-04',
       Summer: TODStatus.season == '2021-08',
       Fall: TODStatus.season == '2021-10'
-    }">
+    }"
+  >
     <div class="row" *ngIf="loaded">
-      <div class="col-md-2 col-sm-6 col-6" *ngFor="let plant of getAllPlants()" >
+      <div class="col-md-2 col-sm-6 col-6" *ngFor="let plant of getAllPlants()">
         <!-- [ngClass]="{ Running: plant.powState, Off: !plant.powState }" -->
-        <div class="card mt-3" [ngClass]="{ Running: plant.powState, Off: !plant.powState }">
+        <div
+          class="card mt-3"
+          [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
+        >
           <div class="card-body">
             <!-- <img src="../../assets/LEAF.png" /> -->
             <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
@@ -74,12 +125,36 @@
             </button>
             <p>{{ checkPower(plant.id) }} / {{ plant.nameplateCapacity }} MW</p>
             <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
-            <img class="Display" *ngIf="plant.fuelId == 1" src="../../assets/nuclear.png" />
-            <img class="Display" *ngIf="plant.fuelId == 2" src="../../assets/natural_gas.png" />
-            <img class="Display" *ngIf="plant.fuelId == 3" src="../../assets/Coal-power-plant.png" />
-            <img class="Display" *ngIf="plant.fuelId == 5" src="../../assets/Hydroelectric-power-plant.png" />
-            <img class="Display" *ngIf="plant.fuelId == 6" src="../../assets/Wind-power.svg" />
-            <img class="Display" *ngIf="plant.fuelId == 7" src="../../assets/Solar-energy.png" />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 1"
+              src="../../assets/nuclear.png"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 2"
+              src="../../assets/natural_gas.png"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 3"
+              src="../../assets/Coal-power-plant.png"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 5"
+              src="../../assets/Hydroelectric-power-plant.png"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 6"
+              src="../../assets/Wind-power.svg"
+            />
+            <img
+              class="Display"
+              *ngIf="plant.fuelId == 7"
+              src="../../assets/Solar-energy.png"
+            />
             <!--  <p>{{plant.powState}}</p>-->
 
             <button (click)="removePlant(plant.id)">Delete Plant</button>

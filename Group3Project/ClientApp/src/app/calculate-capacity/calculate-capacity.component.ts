@@ -181,8 +181,14 @@ togglePower(id: number): any {
   this.calculateTotal();
   this.calcProgressBar();
   console.log(this.allPlants[index])
+
+  this.sandboxService.FlipPowState(id).subscribe((response: any) => {
+    console.log(response.powState);
+  });
   return this.allPlants[index].powState;
 }
+
+
 
 toggleTODMenu(){
   this.showTODMenu = !this.showTODMenu;

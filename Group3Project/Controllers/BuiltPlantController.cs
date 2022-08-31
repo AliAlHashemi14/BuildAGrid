@@ -54,6 +54,19 @@ namespace Group3Project.Controllers
             return modifiedPlant;
 
         }
+
+        [HttpPatch("FlipPowState")] 
+
+        public BuiltPlant FlipPowState(int Id)
+        {
+            BuiltPlant turnOn = context.BuiltPlants.FirstOrDefault(x => x.Id == Id);
+            turnOn.PowState = !turnOn.PowState;
+            context.BuiltPlants.Update(turnOn);
+            context.SaveChanges();
+            return turnOn;
+        }
+
+
     }
 }
 
