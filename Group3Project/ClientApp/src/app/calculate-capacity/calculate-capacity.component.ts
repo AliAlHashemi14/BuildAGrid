@@ -43,6 +43,15 @@ export class CalculateCapacityComponent implements OnInit {
   showTODMenu:boolean = false;
   showAddPlant:boolean = false;
 
+  valMax:number = 0;
+  nuke:number = 0;
+  ng:number =0;
+  coal:number = 0;
+  hydro:number = 0;
+  wind:number = 0;
+  sun:number = 0;
+  total2:number = 0;
+
   constructor(
     private eiaService: EiaServiceService,
     private sandboxService: SandboxService,
@@ -136,6 +145,13 @@ ngOnInit() {
   this.getDemand();
 }
 
+// setBars() {
+  
+//   document.getElementById("profBar").style.width = this.nuke.toString()+"%";
+  
+//   document.getElementById("offBar").style.width = this.ng.toString()+"%";
+// }
+
 //user sets new TOD
 getTOD(newTOD: TOD) {
   this.TODStatus = newTOD;
@@ -157,6 +173,27 @@ toggleTODMenu(){
 
 toggleAddPlant(){
   this.showAddPlant = !this.showAddPlant;
+}
+
+calcProgressBar(){
+  this.valMax = this.demand.response.data[0].value * 0.1;
+  this.nuke = (this.calcTotalByType(1)/this.valMax)*100;
+  this.ng = (this.calcTotalByType(2)/this.valMax)*100;
+  this.coal = (this.calcTotalByType(3)/this.valMax)*100
+  this.hydro = (this.calcTotalByType(5)/this.valMax)*100
+  this.wind = (this.calcTotalByType(6)/this.valMax)*100
+  this.sun = (this.calcTotalByType(7)/this.valMax)*100
+  //this.setBars();
+}
+
+calcTotalByType(fuelId:number):any{
+  this.total2 = 0;
+  this.allPlants.forEach((p:BuiltPlant) => {
+    if(p.fuelId==fuelId){
+      this.total2 += this.checkPower(p.id)  //returns check power for each plants
+    }
+  });  
+  return this.total2;
 }
 
 checkPower(id: number): any {
@@ -234,9 +271,12 @@ getTodddString(): string {
 }
 
 
+
+
 calculateTotal():any {
   this.total = 0;
   this.allPlants.forEach((p:BuiltPlant) => {
+    
     this.total += this.checkPower(p.id)  //returns check power for each plants
   }); 
   console.log(this.total) 
