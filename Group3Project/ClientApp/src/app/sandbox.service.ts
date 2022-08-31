@@ -25,11 +25,11 @@ export class SandboxService {
   }
 
   ModifyCapacities(Id:number, NPC:number, AC:number):any{
-    return this.http.patch(`${this.baseUrl}${this.endpoint}/ModifyCapacities/${Id}?Npc=${NPC}&Ac=${AC}`, {});
+    return this.http.put(`${this.baseUrl}${this.endpoint}/ModifyCapacities/${Id}?Npc=${NPC}&Ac=${AC}`, {});
   }
 
   FlipPowState(Id:number):any {
-    return this.http.patch(`${this.baseUrl}${this.endpoint}/FlipPowState?Id=${Id}`, {});
+    return this.http.put(`${this.baseUrl}${this.endpoint}/FlipPowState?Id=${Id}`, {});
   }
 
 }

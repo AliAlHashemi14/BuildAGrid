@@ -42,8 +42,10 @@ namespace Group3Project.Controllers
             return context.BuiltPlants.ToList();
 
         }
-
-        [HttpPatch("ModifyCapacities/{Id}")]
+        // post - new object 
+        // put - same obj, update fields 
+        // patch - take an object, update props, submit them as a NEW entry 
+        [HttpPut("ModifyCapacities/{Id}")]
         public BuiltPlant ModifyCapacities(int Id, int NPC, int AC)
         {
             BuiltPlant modifiedPlant = context.BuiltPlants.FirstOrDefault(x => x.Id == Id);
@@ -55,7 +57,7 @@ namespace Group3Project.Controllers
 
         }
 
-        [HttpPatch("FlipPowState")] 
+        [HttpPut("FlipPowState")] 
 
         public BuiltPlant FlipPowState(int Id)
         {

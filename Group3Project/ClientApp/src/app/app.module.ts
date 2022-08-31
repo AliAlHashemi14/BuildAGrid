@@ -13,6 +13,9 @@ import { CreateAPlantComponent } from './create-aplant/create-aplant.component';
 import { TODChangerComponent } from './tod-changer/tod-changer.component';
 import { ListOfPlantsComponent } from './list-of-plants/list-of-plants.component';
 import { CalculateCapacityComponent } from './calculate-capacity/calculate-capacity.component';
+import { LearnPlantInfoComponent } from './learn-plant-info/learn-plant-info.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FactsForNerdsComponent } from './facts-for-nerds/facts-for-nerds.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,8 @@ import { CalculateCapacityComponent } from './calculate-capacity/calculate-capac
     TODChangerComponent,
     ListOfPlantsComponent,
     CalculateCapacityComponent,
+    LearnPlantInfoComponent,
+    FactsForNerdsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,7 +43,8 @@ import { CalculateCapacityComponent } from './calculate-capacity/calculate-capac
       { path: 'tod-changer', component: TODChangerComponent },
       { path: 'calc-cap', component: CalculateCapacityComponent },
       
-    ])
+    ]),
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

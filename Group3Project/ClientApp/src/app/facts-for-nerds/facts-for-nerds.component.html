@@ -1,0 +1,76 @@
+<div>
+  <h1>Facts for Nerds: A Q&A</h1>
+</div>
+<div>
+  <h2>How did you calculate power?</h2>
+  <h3>
+    Short answer: we took historical data of operable generators and hourly
+    electricity generation and made a ratio. The nameplate capacity is then
+    multiplied by that ratio.
+  </h3>
+  <h4>Long answer:</h4>
+  <p>
+    We used API calls to get historical data from 2021 in the US from the Energy
+    Information Agency (EIA) API. We then chose arbitrary dates and times to
+    represent the four seasons and four distinct times of day. The steps for
+    processing this data are shown in the flowchart below (reads right to left).
+  </p>
+  <iframe
+    style="border: 1px solid rgba(0, 0, 0, 0.1)"
+    width="1000"
+    height="750"
+    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FkyodSV7VAjfHJsilN8GFVy%2FAPI-Logic%3Fnode-id%3D0%253A1"
+    allowfullscreen
+  ></iframe>
+  <p>
+    Future work could include avereaging our calulated capacities over a few
+    hours in a day or a few days in a month so that the spikes in energy due to
+    weather are less pronounced.
+  </p>
+</div>
+<br />
+<div>
+  <h2>Why is my power plant not producing at capacity?</h2>
+  <h3>
+    Short answer: our data reflects hourly generation by each fuel type, which
+    depends on many factors.
+  </h3>
+  <h4>Long answer:</h4>
+  <p>
+    Some plants are run as peaking plants (aren't on all the time), others have
+    planned outages (i.e. nuclear in the spring and fall), and yet others are
+    dependent on weather and sunlight.
+  </p>
+</div>
+<br />
+<div>
+  <h2>Why is demand off by a few orders of magnitude?</h2>
+  <h3>
+    Short answer: The data is for a balancing authority, which has many plants
+    in real life. We wanted people to not have 50+ plants to work with to meet
+    demand - we figure they got the jist.
+  </h3>
+  <h4>Long answer:</h4>
+  <p>
+    We multiplied the balancing authority's actual hourly demand by 0.01. We
+    picked times in the day that were representative of night, morning, midday,
+    and evening. This means the power is a snapshot in time, not live or averged
+    in any way. Future work could include avereaging demand over a few hours in
+    a day or a few days in a month.
+  </p>
+</div>
+<br />
+<div>
+  <h2>Why can't I make a 1500 MW Solar Plant?</h2>
+  <h3>
+    Short answer: solar plants of that size have yet to be built in the US.
+  </h3>
+  <h4>Long answer:</h4>
+  <p>
+    We based the minimum and maximum plant sizes based on what plants were
+    operational in the US in 2021. According to this website
+    (https://www.nrel.gov/docs/fy13osti/56290.pdf), the approximate acre/MW for
+    large photovoltaic power plants is about 8. Using that figure, dimensional
+    analysis gives us a 18.75 square mile area for a 1500 MW solar plant.
+  </p>
+</div>
