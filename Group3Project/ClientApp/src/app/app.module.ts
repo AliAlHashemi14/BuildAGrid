@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -16,6 +17,7 @@ import { CalculateCapacityComponent } from './calculate-capacity/calculate-capac
 import { LearnPlantInfoComponent } from './learn-plant-info/learn-plant-info.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FactsForNerdsComponent } from './facts-for-nerds/facts-for-nerds.component';
+import { Secret } from './secret';
 
 @NgModule({
   declarations: [
@@ -30,11 +32,13 @@ import { FactsForNerdsComponent } from './facts-for-nerds/facts-for-nerds.compon
     CalculateCapacityComponent,
     LearnPlantInfoComponent,
     FactsForNerdsComponent,
+    
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    SocialLoginModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -48,7 +52,22 @@ import { FactsForNerdsComponent } from './facts-for-nerds/facts-for-nerds.compon
     ]),
     NoopAnimationsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              Secret.Oauth
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NUMBER_TYPE } from '@angular/compiler/src/output/output_ast';
 import { waitForAsync } from '@angular/core/testing';
 import { ActualCapacity } from '../actual-capacity';
 import { BuiltPlant } from '../built-plant';

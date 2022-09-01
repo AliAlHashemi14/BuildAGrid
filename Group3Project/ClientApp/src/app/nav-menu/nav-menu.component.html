@@ -27,7 +27,7 @@
           >
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-         
+
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/add-plant']"
               >Add Plant</a
@@ -42,6 +42,20 @@
             <a class="nav-link text-dark" [routerLink]="['/calc-cap']"
               >Test Capacity</a
             >
+          </li>
+          <li class="nav-item">
+            <asl-google-signin-button
+              *ngIf="!loggedIn"
+              type="icon"
+              size="medium"
+            ></asl-google-signin-button>
+            <button
+              class="btn btn-outline-dark"
+              *ngIf="loggedIn"
+              (click)="signOut()"
+            >
+              Sign Out
+            </button>
           </li>
         </ul>
       </div>

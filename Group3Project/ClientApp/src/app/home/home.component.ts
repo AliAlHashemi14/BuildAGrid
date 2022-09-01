@@ -1,4 +1,3 @@
-import { NUMBER_TYPE } from '@angular/compiler/src/output/output_ast';
 import { Component } from '@angular/core';
 import { waitForAsync } from '@angular/core/testing';
 import { ActualCapacity } from '../actual-capacity';
