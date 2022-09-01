@@ -1,8 +1,7 @@
 <div id="border">
   <div
     id="sky"
-    class="container sticky-top
-    "
+    class="container sticky-top"
     [ngClass]="{
       Night: TODStatus.time == 'T10',
       Morning: TODStatus.time == 'T14',
@@ -11,15 +10,19 @@
     }"
   >
     <div class="row">
-      <div class="col-md-6 col-12">
+      <div class="col-12">
         <span>
           <button (click)="toggleTODMenu()">Show Menu</button>
           <button (click)="toggleAddPlant()">Add Plant</button>
+          <button routerLink="/FactsForNerds">Facts For Nerds</button>
+          <button routerLink="/LearnPlantInfo">
+            How Does Each Plant Produce Energy?
+          </button>
         </span>
         <div *ngIf="showAddPlant">
           <app-create-aplant (created)="newPlantAdmin()"></app-create-aplant>
         </div>
-        <div class="card" *ngIf="showTODMenu">
+        <div *ngIf="showTODMenu">
           <app-tod-changer (created)="getTOD($event)"></app-tod-changer>
           <!-- <button (click)="getDemand()">0) and 2) Update Demand</button>
           <button (click)="getRatio2()">3) Get plants</button>
@@ -38,10 +41,10 @@
               text-align: center;
             "
           >
-          <p>
-            Producing {{ total }}MW of Required
-            {{ (demand.response.data[0].value * TODStatus.difficulty) }} MW
-          </p>
+            <p>
+              Producing {{ total }}MW of Required
+              {{ demand.response.data[0].value * TODStatus.difficulty }} MW
+            </p>
             <div class="progress">
               <div
                 class="progress-bar"
@@ -86,10 +89,18 @@
                 title="Solar (PV)"
               ></div>
             </div>
-            <p *ngIf="(demand.response.data[0].value *  TODStatus.difficulty) < total">
+            <p
+              *ngIf="
+                demand.response.data[0].value * TODStatus.difficulty < total
+              "
+            >
               You have successfully powered the region!
             </p>
-            <p *ngIf="(demand.response.data[0].value *  TODStatus.difficulty )>= total">
+            <p
+              *ngIf="
+                demand.response.data[0].value * TODStatus.difficulty >= total
+              "
+            >
               There is not enough electricity to meet demand. Consider turning
               on or building additional power plants.
             </p>
@@ -130,31 +141,43 @@
               class="Display"
               *ngIf="plant.fuelId == 1"
               src="../../assets/nuclear.png"
+              alt="Nuclear Plant Symbol"
+              title="Nuclear Plant Symbol"
             />
             <img
               class="Display"
               *ngIf="plant.fuelId == 2"
               src="../../assets/natural_gas.png"
+              alt="Natural Gas Plant Symbol"
+              title="Natural Gas Plant Symbol"
             />
             <img
               class="Display"
               *ngIf="plant.fuelId == 3"
               src="../../assets/Coal-power-plant.png"
+              alt="Coal Plant Symbol"
+              title="Coal Plant Symbol"
             />
             <img
               class="Display"
               *ngIf="plant.fuelId == 5"
               src="../../assets/Hydroelectric-power-plant.png"
+              alt="Hydro Plant Symbol"
+              title="Hydro Plant Symbol"
             />
             <img
               class="Display"
               *ngIf="plant.fuelId == 6"
               src="../../assets/Wind-power.svg"
+              alt="Wind Plant Symbol"
+              title="Wind Plant Symbol"
             />
             <img
               class="Display"
               *ngIf="plant.fuelId == 7"
               src="../../assets/Solar-energy.png"
+              alt="Solar Plant Symbol"
+              title="Solar Plant Symbol"
             />
             <!--  <p>{{plant.powState}}</p>-->
 

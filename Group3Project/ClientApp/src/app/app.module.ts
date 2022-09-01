@@ -42,6 +42,8 @@ import { FactsForNerdsComponent } from './facts-for-nerds/facts-for-nerds.compon
       { path: 'add-plant', component: CreateAPlantComponent },
       { path: 'tod-changer', component: TODChangerComponent },
       { path: 'calc-cap', component: CalculateCapacityComponent },
+      {path: 'FactsForNerds', component: FactsForNerdsComponent},
+      {path: 'LearnPlantInfo', component: LearnPlantInfoComponent}
       
     ]),
     NoopAnimationsModule
