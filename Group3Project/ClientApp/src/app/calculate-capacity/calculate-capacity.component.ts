@@ -42,6 +42,7 @@ export class CalculateCapacityComponent implements OnInit {
   total:number = 0;
   showTODMenu:boolean = false;
   showAddPlant:boolean = false;
+  factor:number = 0.1;
 
   valMax:number = 0;
   nuke:number = 0;
@@ -137,7 +138,7 @@ export class CalculateCapacityComponent implements OnInit {
 // }
 
 async ngOnInit() {
-  this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO' });
+  this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO', difficulty: 0.01});
   // for (let i = 0; i < this.allPlants.length; i++) {
   //   this.checkPower(i);
   // }
@@ -159,6 +160,7 @@ async getTOD(newTOD: TOD) {
   this.TODStatus = newTOD;
   this.getDemand();
   this.getRatio2();
+  console.log(this.TODStatus.difficulty)
   return this.TODStatus;
   //console.log(this.TODStatus.season)
 }
@@ -199,7 +201,7 @@ toggleAddPlant(){
 }
 
 calcProgressBar(){
-  this.valMax = this.demand.response.data[0].value * 0.01;
+  this.valMax = this.demand.response.data[0].value * this.TODStatus.difficulty;
   this.nuke = (this.calcTotalByType(1)/this.valMax)*100;
   this.ng = (this.calcTotalByType(2)/this.valMax)*100;
   this.coal = (this.calcTotalByType(3)/this.valMax)*100

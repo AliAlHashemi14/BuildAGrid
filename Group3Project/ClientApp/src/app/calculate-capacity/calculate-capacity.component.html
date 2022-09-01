@@ -40,7 +40,7 @@
           >
           <p>
             Producing {{ total }}MW of Required
-            {{ demand.response.data[0].value * factor }} MW
+            {{ (demand.response.data[0].value * TODStatus.difficulty) }} MW
           </p>
             <div class="progress">
               <div
@@ -86,10 +86,10 @@
                 title="Solar (PV)"
               ></div>
             </div>
-            <p *ngIf="demand.response.data[0].value * factor < total">
+            <p *ngIf="(demand.response.data[0].value *  TODStatus.difficulty) < total">
               You have successfully powered the region!
             </p>
-            <p *ngIf="demand.response.data[0].value * factor >= total">
+            <p *ngIf="(demand.response.data[0].value *  TODStatus.difficulty )>= total">
               There is not enough electricity to meet demand. Consider turning
               on or building additional power plants.
             </p>

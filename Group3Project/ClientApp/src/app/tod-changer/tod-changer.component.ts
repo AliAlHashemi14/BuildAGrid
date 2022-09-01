@@ -60,6 +60,7 @@ export class TODChangerComponent implements OnInit {
     }
   ];
   regions:string[] = ["MISO", "CISO"];
+  difficulty:any[] = [{num: 0.01, label:"Easy"}, {num: 0.1, label:"Medium"}, {num:1, label:"Actual Demand (Hard)"}]
 
   constructor() { }
 
@@ -67,12 +68,14 @@ export class TODChangerComponent implements OnInit {
     this.timeSeasonRegion.time = "20";
     this.timeSeasonRegion.region = "MISO";
     this.timeSeasonRegion.season = "Winter";
+    this.timeSeasonRegion.difficulty = 0.01;
   }
 
   UpdateTOD(form:NgForm):void{
     this.timeSeasonRegion.time = form.form.value.TOD;
     this.timeSeasonRegion.region = form.form.value.Region;
     this.timeSeasonRegion.season = form.form.value.Season;
+    this.timeSeasonRegion.difficulty = form.form.value.Difficulty
     console.log(this.timeSeasonRegion)
     this.created.emit(this.timeSeasonRegion);
   }

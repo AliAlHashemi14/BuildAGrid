@@ -14,5 +14,9 @@
     <option *ngFor="let r of regions" [ngValue]="r">{{ r }}</option>
   </select>
 
+  <select name="Difficulty" ngModel required>
+    <option *ngFor="let d of difficulty" [ngValue]="d.num">{{ d.label }}</option>
+  </select>
+
   <button>Submit</button>
 </form>
