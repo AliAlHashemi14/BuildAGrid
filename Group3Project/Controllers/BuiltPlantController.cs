@@ -54,40 +54,11 @@ namespace Group3Project.Controllers
             context.BuiltPlants.Update(modifiedPlant);
             context.SaveChanges();
             return modifiedPlant;
+
         }
-
-
-        [HttpGet("PlantAndMore")]
-        public IEnumerable<BuiltPlant> PlantAndMore()
-        {
-            // pulling all plants from the database like normal, PlantProp property (fuel) is NULL for all. 
-            List<BuiltPlant> plants = context.BuiltPlants.ToList();
-
-            //dictionary : pages = fuel type, definition = PlantProp 
-            Dictionary<int, PlantProp> plantsProp = context.PlantProps.ToDictionary(p => p.Id, p => p);
-
-            //go through all plants from database 
-            foreach (BuiltPlant iteratedPlant in plants)
-            {
-                // isolate the plant we care about (for each loop) 
-                // set plant property 
-                // find the corresponding plant property (Dictionary.Try(getValue) )
-                // out - if value is found, where to put 
-                if (iteratedPlant.FuelId != null)
-                { //if we CAN get props from a fuel id (if it exists) (which it always will but just in 
-                    PlantProp please = default; //get said fuel props 
-                    bool didFindFuel = plantsProp.TryGetValue((int)iteratedPlant.FuelId, out please);
-                    if (didFindFuel)
-                    {
-                        iteratedPlant.Fuel = please;
-                    }
-                }
-            }
-            return plants;
-        }
-
 
         [HttpPut("FlipPowState")] 
+
         public BuiltPlant FlipPowState(int Id)
         {
             BuiltPlant turnOn = context.BuiltPlants.FirstOrDefault(x => x.Id == Id);
