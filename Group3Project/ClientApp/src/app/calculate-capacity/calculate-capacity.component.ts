@@ -136,13 +136,13 @@ export class CalculateCapacityComponent implements OnInit {
 
 // }
 
-ngOnInit() {
+async ngOnInit() {
   this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO' });
   // for (let i = 0; i < this.allPlants.length; i++) {
   //   this.checkPower(i);
   // }
 
-  this.getDemand();
+   this.getDemand();
 
   this.getRatio2();
 }
@@ -199,7 +199,7 @@ toggleAddPlant(){
 }
 
 calcProgressBar(){
-  this.valMax = this.demand.response.data[0].value * 0.1;
+  this.valMax = this.demand.response.data[0].value * 0.01;
   this.nuke = (this.calcTotalByType(1)/this.valMax)*100;
   this.ng = (this.calcTotalByType(2)/this.valMax)*100;
   this.coal = (this.calcTotalByType(3)/this.valMax)*100
@@ -285,7 +285,7 @@ calculateTotal():any {
     this.total += this.checkPower(p.id)  //returns check power for each plants
   }); 
   //console.log(this.total) 
-  return this.total;
+  return Math.round(this.total);
 }
 
 removePlant(id:number):any{

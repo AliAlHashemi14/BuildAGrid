@@ -1,7 +1,8 @@
 <div id="border">
   <div
     id="sky"
-    class="container"
+    class="container sticky-top
+    "
     [ngClass]="{
       Night: TODStatus.time == 'T10',
       Morning: TODStatus.time == 'T14',
@@ -37,6 +38,10 @@
               text-align: center;
             "
           >
+          <p>
+            Producing {{ total }}MW of Required
+            {{ demand.response.data[0].value * factor }} MW
+          </p>
             <div class="progress">
               <div
                 class="progress-bar"
@@ -81,14 +86,10 @@
                 title="Solar (PV)"
               ></div>
             </div>
-            <p>
-              Producing {{ total }}MW of Required
-              {{ demand.response.data[0].value * 0.1 }} MW
-            </p>
-            <p *ngIf="demand.response.data[0].value * 0.1 < total">
+            <p *ngIf="demand.response.data[0].value * factor < total">
               You have successfully powered the region!
             </p>
-            <p *ngIf="demand.response.data[0].value * 0.1 >= total">
+            <p *ngIf="demand.response.data[0].value * factor >= total">
               There is not enough electricity to meet demand. Consider turning
               on or building additional power plants.
             </p>
