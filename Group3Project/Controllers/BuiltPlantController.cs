@@ -12,7 +12,7 @@ namespace Group3Project.Controllers
 
         //add to sandbox 
         [HttpPost("AddAPlant")]
-        public BuiltPlant AddAPlant(int fuelId, int nameplateCapacity)
+        public BuiltPlant AddAPlant(int fuelId, int nameplateCapacity, string userId)
         {
             BuiltPlant newPlant = new BuiltPlant()
             {
@@ -23,6 +23,14 @@ namespace Group3Project.Controllers
 
             };
             context.BuiltPlants.Add(newPlant);
+            context.SaveChanges();
+
+            UserTable table = new UserTable()
+            {
+                UserId = userId,
+                BpId = context.BuiltPlants.OrderBy(b => b.Id).Last().Id
+            };
+            context.UserTables.Add(table);
             context.SaveChanges();
             return newPlant;
         }

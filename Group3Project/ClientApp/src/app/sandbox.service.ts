@@ -12,8 +12,8 @@ export class SandboxService {
 
   endpoint:string= "api/BuiltPlant"; 
 
-  AddAPlant(fuelId:number, nameplateCapacity:number):any {
-    return this.http.post(`${this.baseUrl}${this.endpoint}/AddAPlant?fuelId=${fuelId}&nameplateCapacity=${nameplateCapacity}`, {});
+  AddAPlant(fuelId:number, nameplateCapacity:number, userId:string):any {
+    return this.http.post(`${this.baseUrl}${this.endpoint}/AddAPlant?fuelId=${fuelId}&nameplateCapacity=${nameplateCapacity}&userId=${userId}`, {});
   }
 
   DestroyAPlant(Id:number):any {

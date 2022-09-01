@@ -18,6 +18,7 @@ namespace Group3Project.Models
 
         public virtual DbSet<BuiltPlant> BuiltPlants { get; set; } = null!;
         public virtual DbSet<PlantProp> PlantProps { get; set; } = null!;
+        public virtual DbSet<UserTable> UserTables { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -55,6 +56,22 @@ namespace Group3Project.Models
                 entity.Property(e => e.MaxCapacity).HasColumnName("maxCapacity");
 
                 entity.Property(e => e.MinCapacity).HasColumnName("minCapacity");
+            });
+
+            modelBuilder.Entity<UserTable>(entity =>
+            {
+                entity.ToTable("UserTable");
+
+                entity.Property(e => e.BpId).HasColumnName("BpID");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(40)
+                    .HasColumnName("UserID");
+
+                entity.HasOne(d => d.Bp)
+                    .WithMany(p => p.UserTables)
+                    .HasForeignKey(d => d.BpId)
+                    .HasConstraintName("FK__UserTable__BpID__72C60C4A");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -4,6 +4,7 @@ import { PlantProperties } from '../plant-properties';
 import {SandboxService} from '../sandbox.service'
 import { NewPlant } from '../new-plant';
 import { PlantService } from '../plant.service';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-create-aplant',
@@ -29,7 +30,7 @@ export class CreateAPlantComponent implements OnInit {
 
   @Output() created = new EventEmitter<NewPlant>();
 
-  constructor(private sandboxService:SandboxService, private plantService:PlantService ) { }
+  constructor(private sandboxService:SandboxService, private plantService:PlantService, private authService:SocialAuthService ) { }
 
   plantData:PlantProperties[] = [];
   id:number = -1;
@@ -38,12 +39,21 @@ export class CreateAPlantComponent implements OnInit {
   npc:number[] = [0.1, 1, 10, 50, 100, 250, 500, 1000, 1500];
   placeholder:number = -1;
 
+  user: SocialUser = {} as SocialUser;
+  loggedIn: boolean = false;
+
+
   ngOnInit(): void {
     this.plantService.GetAllProps().subscribe((result:any)=> {
       this.plantData=result
       this.max = this.plantData[0].maxCapacity;
       this.min = this.plantData[0].minCapacity;
     });
+    
+    this.authService.authState.subscribe((response:SocialUser) => {
+      this.user = response;
+      this.loggedIn = response != null;
+    })
     
   }
 
@@ -53,7 +63,7 @@ export class CreateAPlantComponent implements OnInit {
     // this.plant.powState = false;
     console.log(form.form.value.plantType);
     console.log(form.form.value.npcValues);
-    await this.sandboxService.AddAPlant(form.form.value.plantType, form.form.value.npcValues).subscribe((response:any) =>{console.log(response);
+    await this.sandboxService.AddAPlant(form.form.value.plantType, form.form.value.npcValues, this.user.id).subscribe((response:any) =>{console.log(response);
        this.created.emit(response);});
     //this.sandboxService.GetAllPlants().subscribe((result:any) =>console.log(result))
   }

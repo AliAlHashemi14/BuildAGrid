@@ -18,6 +18,8 @@ namespace Group3Project.Models
         public string? FuelTypeCode { get; set; }
         public string? AltCode { get; set; }
 
+
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<BuiltPlant> BuiltPlants { get; set; }
     }
 }
