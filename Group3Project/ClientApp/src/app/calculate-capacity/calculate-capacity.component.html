@@ -1,8 +1,7 @@
 <div id="border">
   <div
     id="sky"
-    class="container sticky-top
-    "
+    class="container sticky-top"
     [ngClass]="{
       Night: TODStatus.time == 'T10',
       Morning: TODStatus.time == 'T14',
@@ -11,11 +10,16 @@
     }"
   >
     <div class="row">
-      <div class="col-md-6 col-12">
+      <div class="col-12">
         <span>
           <button (click)="toggleTODMenu()">Show Menu</button>
           <button (click)="toggleAddPlant()">Add Plant</button>
+          <button routerLink="/FactsForNerds">Facts for Nerds</button>
+          <button routerLink="/LearnPlantInfo">
+            How Does Each Plant Produce Energy?
+          </button>
         </span>
+        <hr />
         <div *ngIf="showAddPlant">
           <app-create-aplant (created)="newPlantAdmin()"></app-create-aplant>
         </div>
@@ -29,76 +33,86 @@
           <button (click)="calcProgressBar()">Update Progress Bar</button> -->
         </div>
       </div>
-      <div class="row">
-        <div class="offset-md-3 col-md-6 col-12">
-          <div
-            class="card"
-            style="
-              box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-              text-align: center;
-            "
-          >
-          <p>
-            Producing {{ total }}MW of Required
-            {{ (demand.response.data[0].value * TODStatus.difficulty) }} MW
-          </p>
-            <div class="progress">
-              <div
-                class="progress-bar"
-                role="progressbar"
-                aria-label="nuclear"
-                style="width: {{ nuke }}%"
-                title="Nuclear"
-              ></div>
-              <div
-                class="progress-bar bg-danger"
-                role="progressbar"
-                aria-label="natural gas"
-                style="width: {{ ng }}%"
-                title="Natural Gas"
-              ></div>
-              <div
-                class="progress-bar bg-info"
-                role="progressbar"
-                aria-label="coal"
-                style="width: {{ coal }}%"
-                title="Coal"
-              ></div>
-              <div
-                class="progress-bar bg-success"
-                role="progressbar"
-                aria-label="hydro"
-                style="width: {{ hydro }}%"
-                title="Hydroelectric"
-              ></div>
-              <div
-                class="progress-bar bg-warning"
-                role="progressbar"
-                aria-label="wind"
-                style="width: {{ wind }}%"
-                title="Wind"
-              ></div>
-              <div
-                class="progress-bar bg-secondary"
-                role="progressbar"
-                aria-label="solar"
-                style="width: {{ sun }}%"
-                title="Solar (PV)"
-              ></div>
+
+      <div class="container text-center">
+        <div class="row">
+          <div class="offset-md-3 col-md-6 col-12">
+            <div
+              class="card"
+              style="
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+                text-align: center;
+              "
+            >
+              <p>
+                Producing {{ total }}MW of Required
+                {{ demand.response.data[0].value * TODStatus.difficulty }} MW
+              </p>
+              <div class="progress">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-label="nuclear"
+                  style="width: {{ nuke }}%"
+                  title="Nuclear"
+                ></div>
+                <div
+                  class="progress-bar bg-danger"
+                  role="progressbar"
+                  aria-label="natural gas"
+                  style="width: {{ ng }}%"
+                  title="Natural Gas"
+                ></div>
+                <div
+                  class="progress-bar bg-info"
+                  role="progressbar"
+                  aria-label="coal"
+                  style="width: {{ coal }}%"
+                  title="Coal"
+                ></div>
+                <div
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  aria-label="hydro"
+                  style="width: {{ hydro }}%"
+                  title="Hydroelectric"
+                ></div>
+                <div
+                  class="progress-bar bg-warning"
+                  role="progressbar"
+                  aria-label="wind"
+                  style="width: {{ wind }}%"
+                  title="Wind"
+                ></div>
+                <div
+                  class="progress-bar bg-secondary"
+                  role="progressbar"
+                  aria-label="solar"
+                  style="width: {{ sun }}%"
+                  title="Solar (PV)"
+                ></div>
+              </div>
+              <p
+                *ngIf="
+                  demand.response.data[0].value * TODStatus.difficulty < total
+                "
+              >
+                You have successfully powered the region!
+              </p>
+              <p
+                *ngIf="
+                  demand.response.data[0].value * TODStatus.difficulty >= total
+                "
+              >
+                There is not enough electricity to meet demand. Consider turning
+                on or building additional power plants.
+              </p>
             </div>
-            <p *ngIf="(demand.response.data[0].value *  TODStatus.difficulty) < total">
-              You have successfully powered the region!
-            </p>
-            <p *ngIf="(demand.response.data[0].value *  TODStatus.difficulty )>= total">
-              There is not enough electricity to meet demand. Consider turning
-              on or building additional power plants.
-            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <div
     id="ground"
     class="container"
