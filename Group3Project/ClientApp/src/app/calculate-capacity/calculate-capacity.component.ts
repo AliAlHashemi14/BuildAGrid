@@ -214,12 +214,12 @@ toggleAddPlant(){
 
 calcProgressBar(){
   this.valMax = this.demand.response.data[0].value * this.TODStatus.difficulty;
-  this.nuke = (this.calcTotalByType(1)/this.valMax)*100;
-  this.ng = (this.calcTotalByType(2)/this.valMax)*100;
-  this.coal = (this.calcTotalByType(3)/this.valMax)*100
-  this.hydro = (this.calcTotalByType(5)/this.valMax)*100
-  this.wind = (this.calcTotalByType(6)/this.valMax)*100
-  this.sun = (this.calcTotalByType(7)/this.valMax)*100
+  this.nuke = Math.round((this.calcTotalByType(1)/this.valMax)*100);
+  this.ng = Math.round((this.calcTotalByType(2)/this.valMax)*100);
+  this.coal = Math.round((this.calcTotalByType(3)/this.valMax)*100);
+  this.hydro = Math.round((this.calcTotalByType(5)/this.valMax)*100);
+  this.wind = Math.round((this.calcTotalByType(6)/this.valMax)*100);
+  this.sun = Math.round((this.calcTotalByType(7)/this.valMax)*100);
   //this.setBars();
 }
 

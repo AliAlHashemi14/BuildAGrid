@@ -48,42 +48,42 @@
                 role="progressbar"
                 aria-label="nuclear"
                 style="width: {{ nuke }}%"
-                title="Nuclear"
+                title="Nuclear {{ nuke }} %"
               ></div>
               <div
                 class="progress-bar bg-danger"
                 role="progressbar"
                 aria-label="natural gas"
                 style="width: {{ ng }}%"
-                title="Natural Gas"
+                title="Natural Gas {{ ng }} %"
               ></div>
               <div
                 class="progress-bar bg-secondary"
                 role="progressbar"
                 aria-label="coal"
                 style="width: {{ coal }}%"
-                title="Coal"
+                title="Coal {{ coal }} %"
               ></div>
               <div
                 class="progress-bar bg-info"
                 role="progressbar"
                 aria-label="hydro"
                 style="width: {{ hydro }}%"
-                title="Hydroelectric"
+                title="Hydroelectric {{ hydro }} %"
               ></div>
               <div
                 class="progress-bar bg-primary"
                 role="progressbar"
                 aria-label="wind"
                 style="width: {{ wind }}%"
-                title="Wind"
+                title="Wind {{ wind }} %"
               ></div>
               <div
                 class="progress-bar bg-warning"
                 role="progressbar"
                 aria-label="solar"
                 style="width: {{ sun }}%"
-                title="Solar (PV)"
+                title="Solar (PV) {{ sun }} % "
               ></div>
             </div>
             <p
@@ -117,9 +117,8 @@
       Fall: TODStatus.season == '2021-10'
     }"
   >
-    <div class="row" *ngIf="loaded">
+    <div class="row" *ngIf="loaded && TODStatus.difficulty == 0.01">
       <div class="col-md-2 col-sm-6 col-6" *ngFor="let plant of getAllPlants()">
-        <!-- [ngClass]="{ Running: plant.powState, Off: !plant.powState }" -->
         <div
           class="card mt-3"
           [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
@@ -184,6 +183,249 @@
       </div>
     </div>
     <!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
-  </div>
+
+
+
+
+  <!-- This is for medium and hard mode -->
+  <div class="row" *ngIf="loaded && TODStatus.difficulty != 0.01">
+    
+    <span class="col-4">
+
+    <div class="card bg-success" >
+      <img
+            class="Display "
+            src="../../assets/nuclear.png"
+            alt="Nuclear Plant Symbol"
+            title="Nuclear Plant Symbol"
+            style="height: 75px; width: 75px; margin:auto; display:block"
+          />
+    <span class="col-12" *ngFor="let plant of getPlantsByType(1)">
+      <span class="card" style="margin-left:10px; margin-right:10px; margin-top:3px"
+        [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
+      >
+      
+      <span>
+        <span class="card-body">
+          <!-- <img src="../../assets/LEAF.png" /> -->
+          <p>{{ checkPower(plant.id) }} / {{ plant.nameplateCapacity }} MW
+          <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
+            Power On
+          </button>
+          <button *ngIf="plant.powState" (click)="togglePower(plant.id)">
+            Power Off
+          </button>
+         
+          <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
+          
+          
+          <!--  <p>{{plant.powState}}</p>-->
+
+          <button (click)="removePlant(plant.id)">Delete Plant</button></p>
+        </span>
+      </span>
+    </span>
+  </span>
+  <!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+</div>
   <!-- <img class="tester" src="../../assets/LEAF.png" /> -->
+</span>
+<span class="col-4">
+  <div class="card bg-danger" >
+    <img
+          class="Display "
+          src="../../assets/natural_gas.png"
+              alt="Natural Gas Plant Symbol"
+              title="Natural Gas Plant Symbol"
+          style="height: 75px; width: 75px; margin:auto; display:block"
+        />
+  <span class="col-12" *ngFor="let plant of getPlantsByType(2)">
+    <span class="card"  style="margin-left:10px; margin-right:10px; margin-top:3px"
+      [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
+    >
+    
+    <span>
+      <span class="card-body">
+        <!-- <img src="../../assets/LEAF.png" /> -->
+        <p>{{ checkPower(plant.id) }} / {{ plant.nameplateCapacity }} MW
+        <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
+          Power On
+        </button>
+        <button *ngIf="plant.powState" (click)="togglePower(plant.id)">
+          Power Off
+        </button>
+       
+        <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
+        
+        
+        <!--  <p>{{plant.powState}}</p>-->
+
+        <button (click)="removePlant(plant.id)">Delete Plant</button></p>
+      </span>
+    </span>
+  </span>
+</span>
+<!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+</div>
+<!-- <img class="tester" src="../../assets/LEAF.png" /> -->
+</span>  
+<span class="col-4">
+  <div class="card bg-secondary" >
+    <img
+          class="Display "
+          src="../../assets/Coal-power-plant.png"
+              alt="Coal Plant Symbol"
+              title="Coal Plant Symbol"
+          style="height: 75px; width: 75px; margin:auto; display:block"
+        />
+  <span class="col-12" *ngFor="let plant of getPlantsByType(3)">
+    <span class="card"  style="margin-left:10px; margin-right:10px; margin-top:3px"
+      [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
+    >
+    
+    <span>
+      <span class="card-body">
+        <!-- <img src="../../assets/LEAF.png" /> -->
+        <p>{{ checkPower(plant.id) }} / {{ plant.nameplateCapacity }} MW
+        <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
+          Power On
+        </button>
+        <button *ngIf="plant.powState" (click)="togglePower(plant.id)">
+          Power Off
+        </button>
+       
+        <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
+        
+        
+        <!--  <p>{{plant.powState}}</p>-->
+
+        <button (click)="removePlant(plant.id)">Delete Plant</button></p>
+      </span>
+    </span>
+  </span>
+</span>
+<!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+</div>
+<!-- <img class="tester" src="../../assets/LEAF.png" /> -->
+</span>  
+<span class="col-4">
+  <div class="card bg-info" >
+    <img
+          class="Display "
+          src="../../assets/Hydroelectric-power-plant.png"
+              alt="Hydro Plant Symbol"
+              title="Hydro Plant Symbol"
+          style="height: 75px; width: 75px; margin:auto; display:block"
+        />
+  <span class="col-12" *ngFor="let plant of getPlantsByType(5)">
+    <span class="card"  style="margin-left:10px; margin-right:10px; margin-top:3px"
+      [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
+    >
+    
+    <span>
+      <span class="card-body">
+        <!-- <img src="../../assets/LEAF.png" /> -->
+        <p>{{ checkPower(plant.id) }} / {{ plant.nameplateCapacity }} MW
+        <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
+          Power On
+        </button>
+        <button *ngIf="plant.powState" (click)="togglePower(plant.id)">
+          Power Off
+        </button>
+       
+        <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
+        
+        
+        <!--  <p>{{plant.powState}}</p>-->
+
+        <button (click)="removePlant(plant.id)">Delete Plant</button></p>
+      </span>
+    </span>
+  </span>
+</span>
+<!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+</div>
+<!-- <img class="tester" src="../../assets/LEAF.png" /> -->
+</span>
+  <span class="col-4">
+  <div class="card bg-primary" >
+    <img
+          class="Display "
+          src="../../assets/Wind-power.svg"
+              alt="Wind Plant Symbol"
+              title="Wind Plant Symbol"
+          style="height: 75px; width: 75px; margin:auto; display:block"
+        />
+  <span class="col-12" *ngFor="let plant of getPlantsByType(6)">
+    <span class="card"  style="margin-left:10px; margin-right:10px; margin-top:3px"
+      [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
+    >
+    
+    <span>
+      <span class="card-body">
+        <!-- <img src="../../assets/LEAF.png" /> -->
+        <p>{{ checkPower(plant.id) }} / {{ plant.nameplateCapacity }} MW
+        <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
+          Power On
+        </button>
+        <button *ngIf="plant.powState" (click)="togglePower(plant.id)">
+          Power Off
+        </button>
+       
+        <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
+        
+        
+        <!--  <p>{{plant.powState}}</p>-->
+
+        <button (click)="removePlant(plant.id)">Delete Plant</button></p>
+      </span>
+    </span>
+  </span>
+</span>
+<!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+</div>
+<!-- <img class="tester" src="../../assets/LEAF.png" /> -->
+</span>
+
+<span class="col-4">
+  <div class="card bg-warning" >
+    <img
+          class="Display "
+          src="../../assets/Solar-energy.png"
+              alt="Solar Plant Symbol"
+              title="Solar Plant Symbol"
+          style="height: 75px; width: 75px; margin:auto; display:block"
+        />
+  <span class="col-12" *ngFor="let plant of getPlantsByType(7)">
+    <span class="card"  style="margin-left:10px; margin-right:10px; margin-top:3px"
+      [ngClass]="{ Running: plant.powState, Off: !plant.powState }"
+    >
+    
+    <span>
+      <span class="card-body">
+        <!-- <img src="../../assets/LEAF.png" /> -->
+        <p>{{ checkPower(plant.id) }} / {{ plant.nameplateCapacity }} MW
+        <button *ngIf="!plant.powState" (click)="togglePower(plant.id)">
+          Power On
+        </button>
+        <button *ngIf="plant.powState" (click)="togglePower(plant.id)">
+          Power Off
+        </button>
+       
+        <!-- <p>fuel ID: {{ plant.fuelId }}</p> -->
+        
+        
+        <!--  <p>{{plant.powState}}</p>-->
+
+        <button (click)="removePlant(plant.id)">Delete Plant</button></p>
+      </span>
+    </span>
+  </span>
+</span>
+<!-- <p>Actual Output:{{ getNetOutput(plant.fuelId) }}</p> -->
+</div>
+<!-- <img class="tester" src="../../assets/LEAF.png" /> -->
+</span>
+</div>
+</div>
 </div>
