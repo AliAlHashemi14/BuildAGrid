@@ -1,7 +1,7 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3"
-  >
+  class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3" style="background-color: #0a2b4e; color: white;"
+>
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/']">Build-A-Grid</a>
       <button
@@ -25,14 +25,14 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-light" [routerLink]="['/']">Home</a>
           </li>
           <li
             class="nav-item"
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/FactsForNerds']"
+            <a class="nav-link text-light" [routerLink]="['/FactsForNerds']"
               >Facts For Nerds</a
             >
           </li>
@@ -41,7 +41,7 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/LearnPlantInfo']"
+            <a class="nav-link text-light" [routerLink]="['/LearnPlantInfo']"
               >How Does Each Plant Produce Energy?</a
             >
           </li>
@@ -52,7 +52,7 @@
               size="medium"
             ></asl-google-signin-button>
             <button
-              class="btn btn-outline-dark"
+              class="btn btn-outline-light"
               *ngIf="loggedIn"
               (click)="signOut()"
             >
