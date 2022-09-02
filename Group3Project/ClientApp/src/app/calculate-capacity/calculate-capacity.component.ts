@@ -11,6 +11,7 @@ import { SandboxService } from '../sandbox.service';
 import { TOD } from '../tod';
 import { concatMap, tap, mergeMap, map } from 'rxjs/operators';
 import { Observable, from, pipe } from 'rxjs';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-calculate-capacity',
@@ -52,10 +53,13 @@ export class CalculateCapacityComponent implements OnInit {
   sun:number = 0;
   total2:number = 0;
 
+  user: SocialUser = {} as SocialUser;
+  loggedIn: boolean = false;
+
   constructor(
     private eiaService: EiaServiceService,
     private sandboxService: SandboxService,
-    private plantService: PlantService
+    private authService:SocialAuthService
   ) {}
 
 //  bigFunction():any {
@@ -137,14 +141,21 @@ export class CalculateCapacityComponent implements OnInit {
 // }
 
 async ngOnInit() {
-  this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO', difficulty: 0.01});
+   this.authService.authState.subscribe((response: SocialUser) =>{
+    this.user = response;
+    this.loggedIn = (response != null);
+    response.id
+    this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO', difficulty: 0.01});
   // for (let i = 0; i < this.allPlants.length; i++) {
   //   this.checkPower(i);
   // }
 
-   this.getDemand();
+    this.getDemand();
 
-  this.getRatio2();
+
+   this.getRatio2();
+  })
+
 }
 
 // setBars() {
@@ -253,11 +264,11 @@ checkPower(id: number): any {
 }
 
 
-getBuiltPlants(): any {
-  this.sandboxService.GetAllPlants().subscribe((response: any) => {
-    this.allPlants = response;
-  });
-}
+// getBuiltPlants(): any {
+//   this.sandboxService.GetAllPlants().subscribe((response: any) => {
+//     this.allPlants = response;
+//   });
+// }
 
 
 async getDemand(): Promise<any> {
@@ -313,7 +324,7 @@ async getRatio2(): Promise<any> {
   this.counter += 1;
   console.log(this.counter);
 
-  await this.sandboxService.GetAllPlantData().subscribe((response: any) => {
+  await this.sandboxService.GetAllPlantDataByUserId(this.user.id).subscribe((response: any) => {
     this.allPlants = response;
     console.log(this.allPlants)
     this.allPlants.forEach((p:BuiltPlant) => {

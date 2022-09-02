@@ -19,6 +19,7 @@ export class NavMenuComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
+      user.id
     });
   }
   

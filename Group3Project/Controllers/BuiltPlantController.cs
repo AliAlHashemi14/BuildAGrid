@@ -106,6 +106,48 @@ namespace Group3Project.Controllers
             }
             return plants;
         }
+
+        [HttpGet("PlantAndMoreByUserId/{userId}")]
+        public IEnumerable<BuiltPlant> PlantAndMoreByUserId(string userId)
+        {
+            // pulling all plants from the database like normal, PlantProp property (fuel) is NULL for all. 
+            
+
+            List<BuiltPlant> results = new List<BuiltPlant>();
+
+            List<UserTable> matches = context.UserTables.Where(u => u.UserId == userId).ToList();
+
+            foreach(UserTable match in matches)
+            {
+                BuiltPlant builtPlant = context.BuiltPlants.FirstOrDefault(p => p.Id == match.BpId);
+                results.Add(builtPlant);
+                
+            }
+            
+            //dictionary : pages = fuel type, definition = PlantProp 
+            Dictionary<int, PlantProp> plantsProp = context.PlantProps.ToDictionary(p => p.Id, p => p);
+
+            //go through all plants from database 
+            foreach (BuiltPlant iteratedPlant in results)
+            {
+                // isolate the plant we care about (for each loop) 
+                // set plant property 
+                // find the corresponding plant property (Dictionary.Try(getValue) )
+                // out - if value is found, where to put 
+
+
+                if (iteratedPlant.FuelId != null)
+                { //if we CAN get props from a fuel id (if it exists) (which it always will but just in 
+                    PlantProp please = default; //get said fuel props 
+                    bool didFindFuel = plantsProp.TryGetValue((int)iteratedPlant.FuelId, out please);
+                    if (didFindFuel)
+                    {
+                        iteratedPlant.Fuel = please;
+                    }
+                }
+            }
+            return results;
+        }
     }
 }
 

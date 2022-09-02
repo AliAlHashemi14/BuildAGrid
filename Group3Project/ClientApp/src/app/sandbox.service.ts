@@ -1,3 +1,4 @@
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { BuiltPlant } from './built-plant';
@@ -26,7 +27,10 @@ export class SandboxService {
 
   GetAllPlantData():any {
     return this.http.get(`${this.baseUrl}${this.endpoint}/PlantAndMore`);
-  } 
+  }
+  GetAllPlantDataByUserId(userId:string):any {
+    return this.http.get(`${this.baseUrl}${this.endpoint}/PlantAndMoreByUserId/${userId}`);
+  }  
   
   ModifyCapacities(Id:number, NPC:number, AC:number):any{
     return this.http.put(`${this.baseUrl}${this.endpoint}/ModifyCapacities/${Id}?Npc=${NPC}&Ac=${AC}`, {});
