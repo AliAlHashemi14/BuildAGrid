@@ -141,7 +141,7 @@ export class CalculateCapacityComponent implements OnInit {
 // }
 
 async ngOnInit() {
-   this.authService.authState.subscribe((response: SocialUser) =>{
+   this.authService.authState.subscribe(async (response: SocialUser) =>{
     this.user = response;
     this.loggedIn = (response != null);
     response.id
@@ -150,10 +150,10 @@ async ngOnInit() {
   //   this.checkPower(i);
   // }
 
+   this.getRatio2();
     this.getDemand();
 
 
-   this.getRatio2();
   })
 
 }
@@ -301,10 +301,12 @@ calculateTotal():any {
 }
 
 removePlant(id:number):any{
+  if(confirm("Are you sure you want to delete this plant?")){
+  
   let index = this.allPlants.findIndex(p => p.id == id)
   this.allPlants.splice(index, 1);
   this.sandboxService.DestroyAPlant(id).subscribe(
-  );
+  );}
 }
 
 newPlantAdmin():any{
@@ -392,7 +394,8 @@ async getRatio2(): Promise<any> {
             });
        
     });
-    
+    this.calcProgressBar();
+    this.total = this.calculateTotal();
     return this.BOOOO;
     
   })}}

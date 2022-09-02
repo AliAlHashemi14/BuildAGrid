@@ -39,7 +39,9 @@ namespace Group3Project.Controllers
         public BuiltPlant DestroyAPlant(int Id)
         {
             BuiltPlant removedPlant = context.BuiltPlants.FirstOrDefault(x => x.Id == Id);
+            UserTable removedUT = context.UserTables.FirstOrDefault(x => x.BpId == Id);
             context.BuiltPlants.Remove(removedPlant);
+            context.UserTables.Remove(removedUT);
             context.SaveChanges();
             return removedPlant;
         }
