@@ -200,7 +200,9 @@ togglePower(id: number): any {
   return this.allPlants[index].powState;
 }
 
-
+getPlantsByType(id:number):BuiltPlant[]{
+  return this.allPlants.filter(p => p.fuelId == id);
+}
 
 toggleTODMenu(){
   this.showTODMenu = !this.showTODMenu;
