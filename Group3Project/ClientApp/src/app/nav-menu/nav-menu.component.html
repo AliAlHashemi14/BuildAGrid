@@ -27,20 +27,22 @@
           >
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/add-plant']"
-              >Add Plant</a
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link text-dark" [routerLink]="['/FactsForNerds']"
+              >Facts For Nerds</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/tod-changer']"
-              >Change Time and Place</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/calc-cap']"
-              >Test Capacity</a
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link text-dark" [routerLink]="['/LearnPlantInfo']"
+              >How Does Each Plant Produce Energy?</a
             >
           </li>
           <li class="nav-item">

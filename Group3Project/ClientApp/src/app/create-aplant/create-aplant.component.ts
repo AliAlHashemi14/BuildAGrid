@@ -36,7 +36,7 @@ export class CreateAPlantComponent implements OnInit {
   id:number = -1;
   max:number = -1;
   min:number = -1;
-  npc:number[] = [0.1, 1, 10, 50, 100, 250, 500, 1000, 1500];
+  npc:number[] = [1, 10, 50, 100, 250, 500, 1000, 1500];
   placeholder:number = -1;
 
   user: SocialUser = {} as SocialUser;

@@ -15,10 +15,6 @@
         <span>
           <button (click)="toggleTODMenu()">Show Menu</button>
           <button (click)="toggleAddPlant()">Add Plant</button>
-          <button routerLink="/FactsForNerds">Facts For Nerds</button>
-          <button routerLink="/LearnPlantInfo">
-            How Does Each Plant Produce Energy?
-          </button>
         </span>
         <div *ngIf="showAddPlant">
           <app-create-aplant (created)="newPlantAdmin()"></app-create-aplant>
@@ -48,7 +44,7 @@
             </p>
             <div class="progress">
               <div
-                class="progress-bar"
+                class="progress-bar bg-success"
                 role="progressbar"
                 aria-label="nuclear"
                 style="width: {{ nuke }}%"
@@ -62,28 +58,28 @@
                 title="Natural Gas"
               ></div>
               <div
-                class="progress-bar bg-info"
+                class="progress-bar bg-secondary"
                 role="progressbar"
                 aria-label="coal"
                 style="width: {{ coal }}%"
                 title="Coal"
               ></div>
               <div
-                class="progress-bar bg-success"
+                class="progress-bar bg-info"
                 role="progressbar"
                 aria-label="hydro"
                 style="width: {{ hydro }}%"
                 title="Hydroelectric"
               ></div>
               <div
-                class="progress-bar bg-warning"
+                class="progress-bar bg-primary"
                 role="progressbar"
                 aria-label="wind"
                 style="width: {{ wind }}%"
                 title="Wind"
               ></div>
               <div
-                class="progress-bar bg-secondary"
+                class="progress-bar bg-warning"
                 role="progressbar"
                 aria-label="solar"
                 style="width: {{ sun }}%"

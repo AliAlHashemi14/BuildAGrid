@@ -1,16 +1,20 @@
-<div *ngFor="let plant in plantInfo">
-        <p>{{plant.plantName}}</p>
-        <p>{{plant.description}}</p>
-</div>
-<!-- <div class="container">
-    <div class="row">
-        <div class="col-3" *ngFor="let plant in plantInfo">
-            <div class="card">
-                <div class="card-body">
-                <p>{{plant.plantName}}</p>
-                <p>{{plant.description}}</p>
-            </div>
-            </div>
-        </div>
-    </div>
+<!-- <div *ngFor="let plant of plantInfo">
+  <p>{{ plant.plantName }}</p>
+  <p>{{ plant.description }}</p>
 </div> -->
+<app-nav-menu></app-nav-menu>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 col-sm-12" *ngFor="let plant of plantInfo">
+      <div class="card">
+        <div class="card-header {{ plant.bgColor }}">
+          <img src="{{ plant.image }}" style="height: 40px" />
+          <h2>{{ plant.plantName }}</h2>
+        </div>
+        <div class="card-body">
+          <p>{{ plant.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
