@@ -313,26 +313,24 @@ async getRatio2(): Promise<any> {
   this.counter += 1;
   console.log(this.counter);
 
-  await this.sandboxService.GetAllPlants().subscribe((response: any) => {
+  await this.sandboxService.GetAllPlantData().subscribe((response: any) => {
     this.allPlants = response;
     console.log(this.allPlants)
     this.allPlants.forEach((p:BuiltPlant) => {
       console.log(p.fuelId);
 
-      this.plantService
-        .GetPlantProps(p.fuelId)
-        .subscribe((B: PlantProperties) => {
-          this.PP.push(B);
+      
+          this.PP.push(p.fuel);
           //console.log(this.PP);
 
           let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
           let monthdate: string = this.TODStatus.season;
 
-          console.log(B.altCode)
+          console.log(p.fuel.altCode)
           this.eiaService
             .getActualCapacity(
               this.TODStatus.region,
-              B.altCode,
+              p.fuel.altCode,
               TODDD,
               TODDD
             )
@@ -341,7 +339,7 @@ async getRatio2(): Promise<any> {
               this.eiaService
                 .getNameplateCapacity(
                   this.TODStatus.region,
-                  B.fuelTypeCode,
+                  p.fuel.fuelTypeCode,
                   monthdate,
                   monthdate
                 )
@@ -357,7 +355,7 @@ async getRatio2(): Promise<any> {
                 this.Aarray.push(Math.round(Atotal));
                 // console.log(Math.round(Atotal));
 
-                console.log(B.fuelTypeCode);
+                console.log(p.fuel.fuelTypeCode);
                   this.NPC = C;
                   this.Ntotal = 0;
 
@@ -381,7 +379,7 @@ async getRatio2(): Promise<any> {
                   })
                 });
             });
-        });
+       
     });
     
     return this.BOOOO;

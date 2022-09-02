@@ -3,3 +3,4 @@ export interface PlantInfo {
     description: string, 
     image: string
 }
+// worry not this is just for education part 

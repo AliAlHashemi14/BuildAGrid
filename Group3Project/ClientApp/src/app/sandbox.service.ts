@@ -24,6 +24,10 @@ export class SandboxService {
     return this.http.get(`${this.baseUrl}${this.endpoint}/GetAllPlants`);
   }
 
+  GetAllPlantData():any {
+    return this.http.get(`${this.baseUrl}${this.endpoint}/PlantAndMore`);
+  } 
+  
   ModifyCapacities(Id:number, NPC:number, AC:number):any{
     return this.http.put(`${this.baseUrl}${this.endpoint}/ModifyCapacities/${Id}?Npc=${NPC}&Ac=${AC}`, {});
   }
@@ -31,5 +35,7 @@ export class SandboxService {
   FlipPowState(Id:number):any {
     return this.http.put(`${this.baseUrl}${this.endpoint}/FlipPowState?Id=${Id}`, {});
   }
+  
+
 
 }

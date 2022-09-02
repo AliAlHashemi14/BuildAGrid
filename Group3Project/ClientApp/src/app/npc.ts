@@ -1,4 +1,4 @@
-
+// npc = inventory of operable generators (yellow part of flowchart)
 export interface Npc {
     response:   Response;
     request:    Request;

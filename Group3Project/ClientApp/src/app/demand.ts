@@ -1,3 +1,5 @@
+// demand is demand for the region 
+
 export interface Demand {
     response:   Response;
     request:    Request;
