@@ -145,7 +145,7 @@ async ngOnInit() {
     this.user = response;
     this.loggedIn = (response != null);
     response.id
-    this.getTOD({ time: 'T01', season: '2021-02', region: 'MISO', difficulty: 0.01});
+    this.getTOD({ time: 'T14', season: '2021-04', region: 'MISO', difficulty: 0.01});
   // for (let i = 0; i < this.allPlants.length; i++) {
   //   this.checkPower(i);
   // }
