@@ -272,7 +272,7 @@ checkPower(id: number): any {
 //   });
 // }
 
-
+// just get demand for the region here 
 async getDemand(): Promise<any> {
   let TODDD: string = `${this.TODStatus.season}-28${this.TODStatus.time}`;
   await this.eiaService

@@ -7,6 +7,12 @@
     
 }
 
+.btn-toggle:hover {
+    color: #ddf7aa;
+    background-color: #95b0b6;
+    border-color: #455963;
+  }
+
 .Running img{
     /* filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(60%); */
     /* filter: hue-rotate(130deg) sepia(13%) saturate(3207%)invert(48%); */
@@ -49,8 +55,8 @@
 .Night{
     background-color: 
     #295a94;
+    /* background-image: "../../assets/NightSky.jpg" */
 }
-
 .Morning{
     background-color: #5294d5;
 }
