@@ -46,6 +46,7 @@ namespace Group3Project.Controllers
             return removedPlant;
         }
 
+        //to speed this up, we should take in userId here, run GetAllPlants() once to return the user's plants. 
         [HttpGet("GetAllPlants")]
         public List<BuiltPlant> GetAllPlants()
         {
@@ -78,6 +79,7 @@ namespace Group3Project.Controllers
             return turnOn;
         }
 
+        //or, we could take in user ID here. 
         [HttpGet("PlantAndMore")]
         public IEnumerable<BuiltPlant> PlantAndMore()
         {

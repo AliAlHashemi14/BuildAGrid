@@ -12,6 +12,7 @@
 </h1>
 <div id="border" *ngIf="loggedIn">
   <div
+    style="border-bottom: 2px solid black"
     id="sky"
     class="container sticky-top"
     [ngClass]="{
@@ -24,10 +25,10 @@
     <div class="row">
       <div class="col-12">
         <span>
-          <button type="button" class="btn-toggle" (click)="toggleTODMenu()">
+          <button class="btn-toggle" (click)="toggleTODMenu()">
             Show Menu
           </button>
-          <button type="button" class="btn-toggle" (click)="toggleAddPlant()">
+          <button class="btn-toggle" (click)="toggleAddPlant()">
             Add Plant
           </button>
         </span>
@@ -124,6 +125,7 @@
 
   <div
     id="ground"
+    style="border: 2px black"
     class="container"
     [ngClass]="{
       Winter: TODStatus.season == '2021-02',
@@ -141,7 +143,6 @@
           <div class="card-body">
             <!-- <img src="../../assets/LEAF.png" /> -->
             <button
-              type="button"
               class="btn-toggle"
               *ngIf="!plant.powState"
               (click)="togglePower(plant.id)"
@@ -149,7 +150,6 @@
               Power On
             </button>
             <button
-              type="button"
               class="btn-toggle"
               *ngIf="plant.powState"
               (click)="togglePower(plant.id)"
@@ -202,11 +202,7 @@
             />
             <!--  <p>{{plant.powState}}</p>-->
 
-            <button
-              type="button"
-              class="btn-toggle"
-              (click)="removePlant(plant.id)"
-            >
+            <button class="btn-toggle" (click)="removePlant(plant.id)">
               Delete Plant
             </button>
           </div>
@@ -239,7 +235,6 @@
                     {{ checkPower(plant.id) }} /
                     {{ plant.nameplateCapacity }} MW
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="!plant.powState"
                       (click)="togglePower(plant.id)"
@@ -247,7 +242,6 @@
                       Power On
                     </button>
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="plant.powState"
                       (click)="togglePower(plant.id)"
@@ -259,11 +253,7 @@
 
                     <!--  <p>{{plant.powState}}</p>-->
 
-                    <button
-                      type="button"
-                      class="btn-toggle"
-                      (click)="removePlant(plant.id)"
-                    >
+                    <button class="btn-toggle" (click)="removePlant(plant.id)">
                       Delete Plant
                     </button>
                   </p>
@@ -297,7 +287,6 @@
                     {{ checkPower(plant.id) }} /
                     {{ plant.nameplateCapacity }} MW
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="!plant.powState"
                       (click)="togglePower(plant.id)"
@@ -305,7 +294,6 @@
                       Power On
                     </button>
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="plant.powState"
                       (click)="togglePower(plant.id)"
@@ -317,11 +305,7 @@
 
                     <!--  <p>{{plant.powState}}</p>-->
 
-                    <button
-                      type="button"
-                      class="btn-toggle"
-                      (click)="removePlant(plant.id)"
-                    >
+                    <button class="btn-toggle" (click)="removePlant(plant.id)">
                       Delete Plant
                     </button>
                   </p>
@@ -355,7 +339,6 @@
                     {{ checkPower(plant.id) }} /
                     {{ plant.nameplateCapacity }} MW
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="!plant.powState"
                       (click)="togglePower(plant.id)"
@@ -363,7 +346,6 @@
                       Power On
                     </button>
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="plant.powState"
                       (click)="togglePower(plant.id)"
@@ -375,11 +357,7 @@
 
                     <!--  <p>{{plant.powState}}</p>-->
 
-                    <button
-                      type="button"
-                      class="btn-toggle"
-                      (click)="removePlant(plant.id)"
-                    >
+                    <button class="btn-toggle" (click)="removePlant(plant.id)">
                       Delete Plant
                     </button>
                   </p>
@@ -413,7 +391,6 @@
                     {{ checkPower(plant.id) }} /
                     {{ plant.nameplateCapacity }} MW
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="!plant.powState"
                       (click)="togglePower(plant.id)"
@@ -421,7 +398,6 @@
                       Power On
                     </button>
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="plant.powState"
                       (click)="togglePower(plant.id)"
@@ -433,11 +409,7 @@
 
                     <!--  <p>{{plant.powState}}</p>-->
 
-                    <button
-                      type="button"
-                      class="btn-toggle"
-                      (click)="removePlant(plant.id)"
-                    >
+                    <button class="btn-toggle" (click)="removePlant(plant.id)">
                       Delete Plant
                     </button>
                   </p>
@@ -471,7 +443,6 @@
                     {{ checkPower(plant.id) }} /
                     {{ plant.nameplateCapacity }} MW
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="!plant.powState"
                       (click)="togglePower(plant.id)"
@@ -479,7 +450,6 @@
                       Power On
                     </button>
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="plant.powState"
                       (click)="togglePower(plant.id)"
@@ -491,11 +461,7 @@
 
                     <!--  <p>{{plant.powState}}</p>-->
 
-                    <button
-                      type="button"
-                      class="btn-toggle"
-                      (click)="removePlant(plant.id)"
-                    >
+                    <button class="btn-toggle" (click)="removePlant(plant.id)">
                       Delete Plant
                     </button>
                   </p>
@@ -530,7 +496,6 @@
                     {{ checkPower(plant.id) }} /
                     {{ plant.nameplateCapacity }} MW
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="!plant.powState"
                       (click)="togglePower(plant.id)"
@@ -538,7 +503,6 @@
                       Power On
                     </button>
                     <button
-                      type="button"
                       class="btn-toggle"
                       *ngIf="plant.powState"
                       (click)="togglePower(plant.id)"
@@ -550,11 +514,7 @@
 
                     <!--  <p>{{plant.powState}}</p>-->
 
-                    <button
-                      type="button"
-                      class="btn-toggle"
-                      (click)="removePlant(plant.id)"
-                    >
+                    <button class="btn-toggle" (click)="removePlant(plant.id)">
                       Delete Plant
                     </button>
                   </p>

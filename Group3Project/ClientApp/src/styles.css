@@ -15,6 +15,12 @@ code {
   border-color: #1861ac;
 }
 
+.btn-toggle:hover {
+  color: #ddf7aa;
+  background-color: #95b0b6;
+  border-color: #455963;
+}
+
 button{
   color: black;
   background-color: #d5e6b4;

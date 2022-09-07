@@ -1,14 +1,16 @@
 <form #postForm="ngForm" (ngSubmit)="newPlant(postForm)">
-    <!-- <input type="number" name="fuelId" placeholder="ID number of Fuel" (input)="changeLimit($event)" ngModel/> -->
-    <select name="plantType" (input)="changeLimit($event)" ngModel > 
-        <option *ngFor="let plant of plantData"  value= {{plant.id}}  >{{plant.fuelType}}</option>
-    </select>
+  <!-- <input type="number" name="fuelId" placeholder="ID number of Fuel" (input)="changeLimit($event)" ngModel/> -->
+  <select name="plantType" (input)="changeLimit($event)" ngModel>
+    <option *ngFor="let plant of plantData" value="{{ plant.id }}">
+      {{ plant.fuelType }}
+    </option>
+  </select>
 
-    <br>
-    <select name="npcValues" ngModel> 
-        <option *ngFor="let num of getWatts()"  [ngValue]="num">{{num}} MW</option>
-    </select>
+  <br />
+  <select name="npcValues" ngModel>
+    <option *ngFor="let num of getWatts()" [ngValue]="num">{{ num }} MW</option>
+  </select>
 
-    <br>
-    <button>Submit</button>
+  <br />
+  <button class="btn-toggle">Submit</button>
 </form>

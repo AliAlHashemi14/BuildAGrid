@@ -7,11 +7,6 @@
     
 }
 
-.btn-toggle:hover {
-    color: #ddf7aa;
-    background-color: #95b0b6;
-    border-color: #455963;
-  }
 
 .Running img{
     /* filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(60%); */
@@ -53,42 +48,71 @@
 
 
 .Night{
-    background-color: 
-    #295a94;
-    /* background-image: "../../assets/NightSky.jpg" */
+    /* background-color: 
+    #295a94; */
+    background-image: url(../../assets/NightSky.jpg);
+    border-bottom: 2px black
+
 }
 .Morning{
-    background-color: #5294d5;
+    
+    /* background-color: #5294d5; */
+    background-image:  url(../../assets/MorningSky.jpg) ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 2px black
+
 }
 
 .Midday{
-    background-color: 
-    #62bdff;
+    /* background-color:  */
+    /* #62bdff; */
+    background-image: url(../../assets/DayTimeSky2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 2px black
+
 }
 
 .Evening{
-    background: linear-gradient(0deg, rgba(255,164,189,1) 0%, rgba(246,230,74,1) 100%);
+    /* background: linear-gradient(0deg, rgba(255,164,189,1) 0%, rgba(246,230,74,1) 100%); */
+    background-image: url(../../assets/Sunset.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 2px black
 
 }
 
 .Winter{
-    background-color: 
-    #d9d9d9;
+    /* background-color: 
+    #d9d9d9; */
+    background-image: url(../../assets/WinterGround.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .Spring{
-    background-color: 
-    #73c55a;
+    /* background-color: 
+    #73c55a; */
+    background-image: url(../../assets/SpringSummerGround.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .Summer{
-    background-color: 
-    #5a9452;
+    /* background-color: 
+    #5a9452; */
+    background-image: url(../../assets/SpringSummerGround.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .Fall{
-    background-color: 
-    #d1ab59;
+    /* background-color: 
+    #d1ab59; */
+    background-image: url(../../assets/FallGround.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #border{
